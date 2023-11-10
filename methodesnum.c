@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "methodesnum.h"
-
+#include "donnees.h"
 
 
 
@@ -79,12 +79,12 @@ double gauss(int n, double (*f)(double,int,double), double a, double b, int m, d
     return Inte; // on retourne la valeur de l'integrale
 }
 
-/*double newton(double x, double (*fonction)(double,double,double), double (*derivee)(double,double,double), double eps, double alpha) {
+double newton(double x, double (*fonction)(double,double,double), double (*derivee)(double,double,double), double eps, double alpha) {
     /* fonction pour l'algorithme de Newton 
     x: point de Gamma_0 fixe pour lequel on cherche y
     fonction: fonction pour laquelle on cherche y telle que f(x,y) = 0
     derivee: derivee par rapport a y de notre fonction
-    eps: tolerance epsilon pour l'approximation de y 
+    eps: tolerance epsilon pour l'approximation de y */
 
     double H = recup_H(H);
     double a = H/2.; // on commence au milieu
@@ -99,4 +99,4 @@ double gauss(int n, double (*f)(double,int,double), double a, double b, int m, d
         i = i+1;
     }
     return a;
-}*/
+}
