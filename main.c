@@ -65,7 +65,6 @@ int main() {
         //printf("%f", Points[i]);
     }
 
-
     /***************************
      Calcul pour plusieurs alpha
      sur Gamma_3 de la solution
