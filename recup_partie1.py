@@ -30,7 +30,7 @@ Y = np.linspace(0.,H,N)
 
 #os.system('make clean')
 #os.system('make partie1')
-os.system('./partie1') # on execute le fichier executable partie1 depuis notre console python
+#os.system('./partie1') # on execute le fichier executable partie1 depuis notre console python
 # penser a le compiler d'abord
     
 
@@ -47,7 +47,7 @@ Ex = [float(i) for i in Exact]
 
 
 # solution approchee sur Gamma_3
-file = open('approche_1.txt', 'r')
+file = open('approche_noyaux.txt', 'r')
 
 data = file.read()
 Approche = data.split()

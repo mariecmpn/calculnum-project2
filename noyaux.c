@@ -16,17 +16,6 @@ double k(double x, double t) {
     return K;
 }
 
-double inte_h(double x, int m, double alpha) {
-    /* fonction a integrer dans l'expression de h */
-    //on recupere d'abord les donnees du probleme
-    double L,H;
-    L = recup_L(L);
-    H = recup_H(H);
-    // puis on retourne la fonction souhaitee
-    //double r = f_0(x, m, 0.)*cos(m*M_PI*x/L);
-    double r = h(x);
-    return r;
-}
 
 double h(double x) {
     /* fonction qui approche (par une somme de M termes) la fonction h
@@ -50,7 +39,19 @@ double h(double x) {
     return S;
 }
 
-double gauss_approx(double x, int n, double a, double b, double val[]) {
+double inte_h(double x, int m, double alpha) {
+    /* fonction a integrer dans l'expression de h */
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    L = recup_L(L);
+    H = recup_H(H);
+    // puis on retourne la fonction souhaitee
+    //double r = f_0(x, m, 0.)*cos(m*M_PI*x/L);
+    double r = h(x);
+    return r;
+}
+
+double gauss_approx(double x, int n, double a, double b, double val[5]) {
     /* fonction pour la quadrature de Gauss-Legendre dans les méthodes d'Adomain et des noyaux iteres
     x: point x pour lequel on calcule \int_a^b k(x,t) u_n(t) dt
     n: nombre de points de quadrature
@@ -58,15 +59,10 @@ double gauss_approx(double x, int n, double a, double b, double val[]) {
     b: borne superieure de l'integrale
     val[]: tableaux de valeurs que l'on calcule dans la fonction noyaux_iter */
 
-    int n = recup_n(n);
     double Inte;
-    if (sizeof(val) != n) {
-        printf("%s", "Mauvaise taille du tableau");
-    }
-    else {
-        int i;
-        float *T = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les points de quadrature
-        float *Tp = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les poids de gauss
+    int i;
+    float T[5]; // allocation dynamique du tableau T qui contient les points de quadrature
+    float Tp[5]; // allocation dynamique du tableau T qui contient les poids de gauss
         switch (n) { // on remplit les tableaux pour les poids et points de quadrature en fonction de n
             case 1:
                 T[0] = 0.;
@@ -107,39 +103,28 @@ double gauss_approx(double x, int n, double a, double b, double val[]) {
                 Tp[2] = (322.-13.*sqrt(70.))/900.;
                 Tp[3] = (322.+13.*sqrt(70.))/900.;
                 Tp[4] = (322.-13.*sqrt(70.))/900.;
-        }
-        Inte = 0.;
-        for (i = 0; i < n; i++) { // on calcule notre integrale
-            Inte = Inte + ((b-a)/2.)*(Tp[i] * k(x,((b-a)*T[i]/2.)+(a+b)/2.)*val[i]);
-        }
-        // on desalloue la place memoire des tableaux
-        free(T);
-        free(Tp);
     }
+    Inte = 0.;
+    for (i = 0; i < n; i++) { // on calcule notre integrale
+        Inte = Inte + ((b-a)/2.)*(Tp[i] * k(x,((b-a)*T[i]/2.)+(a+b)/2.)*val[i]);
+    }
+
+    //free(val);
     return Inte; // on retourne la valeur de l'integrale
 }
-
-/*double fctn_int(double x, double (*k)(double, double), double val[]) {
-    int n = recup_n(n);
-    if (sizeof(val) != n) {
-        printf("%s", "Mauvaise taille du tableau");
-    }
-    else {
-
-    }
-}*/
 
 double noyaux_iter(double x, double alpha) {
     double H = recup_H(H), L = recup_L(L);
     int n = recup_n(n); 
     int i,j; //entiers pour les boucles for
     int nb_iter = recup_nb_iter(nb_iter);
-    double a = 1./alpha;
-    double u_n;
+    double a = 1./alpha; // on calcule le coefficient 1/alpha une seule fois
+    double u_n; // resultat de l'equation de fredholm de seconde espece
 
     // on definit u_0
     double *T = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les points de quadrature
-    double *U = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n a chaque iteration n
+    double *U = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n-1 a chaque iteration n
+    double *Un = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n a chaque iteration n
     switch (n) { // on remplit les tableaux des points de quadrature, et de u_0 en fonction de n
         case 1:
             T[0] = 0.;
@@ -183,12 +168,16 @@ double noyaux_iter(double x, double alpha) {
         }
 
     for (i = 1; i <=nb_iter; i++) {
-        if (i == n) { // pour notre derniere iteration on calcule u_{n+1}
-            u_n = a*h(x) + gauss_approx(x,n,0,L,U);
+        if (i == nb_iter) { // pour notre derniere iteration on calcule u_{n+1}
+            u_n = a*h(x) - a*gauss_approx(x,n,0,L,U);
         } 
         else { // si ce n'est pas la derniere iteration on calcule les u_n(t) pour t les points de quadrature de gauss-legendre
             for (j = 0; j<n; j++) {
-                U[j] = a*h(U[j]) + gauss_approx(U[j],n,0,L,U);
+                Un[j] = a*h(T[j]) - a*gauss_approx(T[j],n,0,L,U);
+            }
+            // une fois qu'on a calcule tous les Un[j] pour l'iteration n, on les met dans U[j] pour les reutiliser dans l'iteration suivante
+            for (j = 0; j<n; j++) {
+                U[j] = Un[j];
             }
         }
     }
@@ -196,6 +185,7 @@ double noyaux_iter(double x, double alpha) {
     // on libere l'espace memoire des tableaux alloues dynamiquement
     free(T);
     free(U);
+    free(Un);
 
     return u_n;
 }

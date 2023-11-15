@@ -3,8 +3,8 @@
 CC = gcc-11
 
 # Regles pour la partie 1 du projet
-partie1: main.o methodesnum.o donnees.o fonctions.o
-	$(CC) -o partie1 main.o fonctions.o methodesnum.o donnees.o
+partie1: main.o methodesnum.o donnees.o fonctions.o noyaux.o
+	$(CC) -o partie1 main.o fonctions.o noyaux.o methodesnum.o donnees.o
 
 methodenum.o: methodesnum.c donnees.h
 	$(CC) -c methodesnum.c
@@ -17,6 +17,9 @@ fonctions.o: fonctions.c donnees.h methodesnum.h
 
 main.o: main.c fonctions.c donnees.h methodesnum.h fonctions.h
 	$(CC) -c main.c
+
+noyaux.o: noyaux.c methodesnum.h donnees.h
+	$(CC) -c noyaux.c
 
 # Regles pour la partie 2 du projet
 partie2: main2.o methodesnum.o donnees.o fonctions.o fonctions2.o

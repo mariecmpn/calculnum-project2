@@ -4,6 +4,7 @@
 #include "fonctions.h"
 #include "donnees.h" 
 #include "methodesnum.h"
+#include "noyaux.h"
 
 
 int main() {
@@ -32,6 +33,19 @@ int main() {
 
     double y = H; // on se place sur Gamma_3
 
+    int choix;
+
+    /***************************
+     Choix de la methode de
+     resolution de l'equation
+     de Fredholm
+    ****************************/
+
+   printf("%s\n", "Choix de la methode de resolution de l'equation de Fredholm: ");
+   printf("%s\n", "1: Methode de resolution d'Adomain");
+   printf("%s\n", "2: Methode des noyaux iteres");
+   printf("%s", "Choix = ");
+   scanf("%lf", &choix);
 
 
     /***************************
@@ -72,19 +86,19 @@ int main() {
     ****************************/ 
 
     y = H; // on se place sur Gamma_3
-    FILE *approche;
-    approche = fopen("approche_1.txt", "w"); // on ouvre le fichier en ecriture
+    FILE *approche_noyaux;
+    approche_noyaux = fopen("approche_noyaux.txt", "w"); // on ouvre le fichier en ecriture
     for (i = 0; i < 22; i++) {
         for (j = 0; j < Nx; j++) {
-            T_app[j] = f_3(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+            T_app[j] = noyaux_iter(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
             //printf("%f", Points[j]);
-            fprintf(approche, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
-            fputs(" ", approche);
+            fprintf(approche_noyaux, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
+            fputs(" ", approche_noyaux);
         }
-        fputs("\n", approche); // on change de ligne quand on change de alpha
+        fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
     }
 
-    fclose(approche); // on ferme le fichier une fois qu'il est rempli
+    fclose(approche_noyaux); // on ferme le fichier une fois qu'il est rempli
 
     /***************************
     Calcul de la solution exacte
@@ -110,7 +124,7 @@ int main() {
     optimal
     ****************************/ 
 
-    double alpha_optim = 1.;
+    /*double alpha_optim = 1.;
     FILE *app_omega;
     app_omega = fopen("solapp_omega.txt", "w");
     FILE *ex_omega;
@@ -149,7 +163,7 @@ int main() {
     // on ferme les fichiers
     fclose(app_omega); 
     fclose(ex_omega);
-    fclose(erreur);
+    fclose(erreur);*/
 
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement

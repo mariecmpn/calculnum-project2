@@ -47,7 +47,6 @@ double q_0(double x) {
  fonctions a approcher
 *************************/
 
-
 double inte_f3(double x, int m, double alpha) {
     /* fonction que l'on integre dans l'expression de f_3 */
     //on recupere les donnees du probleme
