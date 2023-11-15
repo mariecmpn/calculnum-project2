@@ -23,3 +23,8 @@ int recup_n(float n) {
     /* fonction permettant de recuperer le nombre de points de quadrature utilises pour la methode de Gauss-Legendre */
     return 5;
 }
+
+int recup_nb_iter(float nb_iter) {
+    /* fonction permettant de recuperer le nombre souhaite d'iterations pour les methodes d'approximation de f_3 */
+    return 10;
+}

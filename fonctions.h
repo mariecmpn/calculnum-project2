@@ -16,8 +16,8 @@ double q_0(double x);
  fonctions a approcher
 *************************/
 
-double inte_h(double x, int m, double alpha);
-double h(double x);
+//double inte_h(double x, int m, double alpha);
+//double h(double x);
 double inte_f3(double x, int m, double alpha);
 double f_3(double x, double alpha);
 

@@ -16,6 +16,40 @@ double k(double x, double t) {
     return K;
 }
 
+double inte_h(double x, int m, double alpha) {
+    /* fonction a integrer dans l'expression de h */
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    L = recup_L(L);
+    H = recup_H(H);
+    // puis on retourne la fonction souhaitee
+    //double r = f_0(x, m, 0.)*cos(m*M_PI*x/L);
+    double r = h(x);
+    return r;
+}
+
+double h(double x) {
+    /* fonction qui approche (par une somme de M termes) la fonction h
+    x: reel dont on veut calculer l'image */
+    double S;
+    int i;
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    /*S = -q_0(x) + (1/(L*H))*gauss(n,f_0,0,L,0,0);
+    for (i = 1; i<=M; i++) {
+        //S = S + (2*M_PI/pow(L,2)) * (i*cos(i*M_PI*x/L)/sinh(i*M_PI*x/L)) * f_0(x,i,0.) * cosh(i*M_PI*H/L) * gauss(n,inte_h,0,L,i,0);
+        S = S + (2*M_PI/pow(L,2)) * ((i*cos(i*M_PI*x/L)*cosh(i*M_PI*H/L))/sinh(i*M_PI*H/L))* gauss(n,inte_h,0.,L,i,0.);
+    }*/
+    S = (M_PI/L)*(cos(M_PI*x/L)*cosh(M_PI*H/L))/sinh(M_PI*H/L); // on enleve la somme pour cet exemple
+    return S;
+}
+
 double gauss_approx(double x, int n, double a, double b, double val[]) {
     /* fonction pour la quadrature de Gauss-Legendre dans les méthodes d'Adomain et des noyaux iteres
     x: point x pour lequel on calcule \int_a^b k(x,t) u_n(t) dt
@@ -98,6 +132,70 @@ double gauss_approx(double x, int n, double a, double b, double val[]) {
 double noyaux_iter(double x, double alpha) {
     double H = recup_H(H), L = recup_L(L);
     int n = recup_n(n); 
-    
+    int i,j; //entiers pour les boucles for
+    int nb_iter = recup_nb_iter(nb_iter);
+    double a = 1./alpha;
+    double u_n;
 
+    // on definit u_0
+    double *T = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les points de quadrature
+    double *U = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n a chaque iteration n
+    switch (n) { // on remplit les tableaux des points de quadrature, et de u_0 en fonction de n
+        case 1:
+            T[0] = 0.;
+            U[0] = a*h(T[0]);
+            break;
+        case 2:
+            T[0] = -1./sqrt(3.);
+            T[1] = 1./sqrt(3.);
+            U[0] = a*h(T[0]);
+            U[1] = a*h(T[1]);
+            break;
+        case 3:
+            T[0] = -sqrt(3.)/sqrt(5.);
+            T[1] = 0.;
+            T[2] = sqrt(3.)/sqrt(5.);
+            U[0] = a*h(T[0]);
+            U[1] = a*h(T[1]);
+            U[2] = a*h(T[2]);
+            break;
+        case 4:
+            T[0] = -sqrt(3./7.-2./7.*sqrt(6./5.));
+            T[1] = -sqrt(3./7.+2./7.*sqrt(6./5.));
+            T[2] = sqrt(3./7.-2./7.*sqrt(6./5.));
+            T[3] = sqrt(3./7.+2./7.*sqrt(6./5.));
+            U[0] = a*h(T[0]);
+            U[1] = a*h(T[1]);
+            U[2] = a*h(T[2]);
+            U[3] = a*h(T[3]);
+            break;
+        case 5:
+            T[0] = 0;
+            T[1] = -(1./3.)*sqrt(5.-2.*sqrt(10./7.));
+            T[2] = -(1./3.)*sqrt(5.+2.*sqrt(10./7.));
+            T[3] = (1./3.)*sqrt(5.-2.*sqrt(10./7.));
+            T[4] = (1./3.)*sqrt(5.+2.*sqrt(10./7.));
+            U[0] = a*h(T[0]);
+            U[1] = a*h(T[1]);
+            U[2] = a*h(T[2]);
+            U[3] = a*h(T[3]);
+            U[4] = a*h(T[4]);
+        }
+
+    for (i = 1; i <=nb_iter; i++) {
+        if (i == n) { // pour notre derniere iteration on calcule u_{n+1}
+            u_n = a*h(x) + gauss_approx(x,n,0,L,U);
+        } 
+        else { // si ce n'est pas la derniere iteration on calcule les u_n(t) pour t les points de quadrature de gauss-legendre
+            for (j = 0; j<n; j++) {
+                U[j] = a*h(U[j]) + gauss_approx(U[j],n,0,L,U);
+            }
+        }
+    }
+
+    // on libere l'espace memoire des tableaux alloues dynamiquement
+    free(T);
+    free(U);
+
+    return u_n;
 }

@@ -4,6 +4,7 @@
 #include "fonctions.h" // header de ce fichier
 #include "donnees.h" // besoin des donnees du probleme
 #include "methodesnum.h" // besoin de la methode de quadrature de gauss-legendre
+#include "noyaux.h"
 
 
 /************************
@@ -46,39 +47,6 @@ double q_0(double x) {
  fonctions a approcher
 *************************/
 
-double inte_h(double x, int m, double alpha) {
-    /* fonction a integrer dans l'expression de h */
-    //on recupere d'abord les donnees du probleme
-    double L,H;
-    L = recup_L(L);
-    H = recup_H(H);
-    // puis on retourne la fonction souhaitee
-    //double r = f_0(x, m, 0.)*cos(m*M_PI*x/L);
-    double r = h(x);
-    return r;
-}
-
-double h(double x){
-    /* fonction qui approche (par une somme de M termes) la fonction h
-    x: reel dont on veut calculer l'image */
-    double S;
-    int i;
-    //on recupere d'abord les donnees du probleme
-    double L,H;
-    int M,n;
-    L = recup_L(L);
-    H = recup_H(H);
-    M = recup_M(M);
-    n = recup_n(n);
-    // puis on retourne la fonction souhaitee
-    /*S = -q_0(x) + (1/(L*H))*gauss(n,f_0,0,L,0,0);
-    for (i = 1; i<=M; i++) {
-        //S = S + (2*M_PI/pow(L,2)) * (i*cos(i*M_PI*x/L)/sinh(i*M_PI*x/L)) * f_0(x,i,0.) * cosh(i*M_PI*H/L) * gauss(n,inte_h,0,L,i,0);
-        S = S + (2*M_PI/pow(L,2)) * ((i*cos(i*M_PI*x/L)*cosh(i*M_PI*H/L))/sinh(i*M_PI*H/L))* gauss(n,inte_h,0.,L,i,0.);
-    }*/
-    S = (M_PI/L)*(cos(M_PI*x/L)*cosh(M_PI*H/L))/sinh(M_PI*H/L); // on enleve la somme pour cet exemple
-    return S;
-}
 
 double inte_f3(double x, int m, double alpha) {
     /* fonction que l'on integre dans l'expression de f_3 */
