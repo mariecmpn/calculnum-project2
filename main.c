@@ -124,9 +124,9 @@ int main() {
     optimal
     ****************************/ 
 
-    /*double alpha_optim = 1.;
+    double alpha_optim = 1.;
     FILE *app_omega;
-    app_omega = fopen("solapp_omega.txt", "w");
+    app_omega = fopen("solapp_omega_noyaux.txt", "w");
     FILE *ex_omega;
     ex_omega = fopen("solex_omega.txt", "w");
     FILE *erreur;
@@ -163,7 +163,7 @@ int main() {
     // on ferme les fichiers
     fclose(app_omega); 
     fclose(ex_omega);
-    fclose(erreur);*/
+    fclose(erreur);
 
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement

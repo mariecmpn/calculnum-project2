@@ -106,7 +106,7 @@ double gauss_approx(double x, int n, double a, double b, double val[5]) {
     }
     Inte = 0.;
     for (i = 0; i < n; i++) { // on calcule notre integrale
-        Inte = Inte + ((b-a)/2.)*(Tp[i] * k(x,((b-a)*T[i]/2.)+(a+b)/2.)*val[i]);
+        Inte = Inte + ((b-a)*0.5)*(Tp[i] * k(x,((b-a)*T[i]*0.5)+(a+b)*0.5)*val[i]);
     }
 
     //free(val);

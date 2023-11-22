@@ -78,7 +78,7 @@ plt.plot(X, Ex)
 plt.title('Solution exacte T_ex sur Gamma_3')
 plt.show()
 
-plt.plot(X, T_alpha[1])
+plt.plot(X, T_alpha[0])
 plt.title('Solution approchee T_app sur Gamma_3')
 plt.show()
 
@@ -96,7 +96,7 @@ def f(x,y):
 
 alpha = 1.
 
-file = open('solapp_omega.txt', 'r')
+file = open('solapp_omega_noyaux.txt', 'r')
 data = file.read()
 SolApp = data.split()
 SolApp = [float(i) for i in SolApp]

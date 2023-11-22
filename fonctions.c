@@ -90,7 +90,7 @@ double B0_f3_f0(double x, int m, double alpha){
     car en argument de gauss() il faut une fonction
     x: reel dont on veut calculer l'image */
     //double r = f_3(x,alpha)- f_0(x,m,alpha);
-    double r = f_3(x,alpha) + m*0.;
+    double r = noyaux_iter(x,alpha) + m*0.;
     return r;
 }
 
@@ -107,7 +107,7 @@ double Am_f3(double x, int m, double alpha){
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    double r = f_3(x,alpha)*cos((m*M_PI*x)/L);
+    double r = noyaux_iter(x,alpha)*cos((m*M_PI*x)/L);
     return r;
 }
 
@@ -158,7 +158,7 @@ double Bm_f3(double x, int m, double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    double r = f_3(x,alpha)*cos((m*M_PI*x)/L);
+    double r = noyaux_iter(x,alpha)*cos((m*M_PI*x)/L);
     return r;
 }
 
