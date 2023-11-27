@@ -27,7 +27,7 @@ X = np.linspace(0.,L,N)
 
 #os.system('make clean')
 #os.system('make partie2')
-os.system('./partie2') # on execute le fichier executable partie2 depuis notre console python
+#os.system('./partie2') # on execute le fichier executable partie2 depuis notre console python
 # penser a le compiler d'abord
 
 #%% lecture des fichiers
@@ -43,7 +43,7 @@ Ex = [float(i) for i in Exact]
 
 
 # solution approchee sur Gamma_3
-file = open('frontiere_app.txt', 'r')
+file = open('frontiere_app_noyaux.txt', 'r')
 
 data = file.read()
 Approche = data.split()
@@ -59,10 +59,10 @@ Gamma_alpha = np.split(App, 22)
  
 #%% graphiques
 
-alpha = 0
+alpha = 1
 plt.plot(X, Ex, label = 'frontiere exacte')
 plt.plot(X, Gamma_alpha[alpha], label = 'frontiere approchee')
-plt.axis([0.,1.,0.,1.])
+#plt.axis([0.,1.,0.,1.])
 plt.legend()
 plt.title('Frontieres Gamma exacte et approchee')
 plt.show()

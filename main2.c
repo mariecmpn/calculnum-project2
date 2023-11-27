@@ -39,8 +39,7 @@ int main() {
     printf("%s\n", "2: Methode des noyaux iteres");
     printf("%s\n", "(Par defaut: methode d'Adomain)");
     printf("%s", "Choix = ");
-    scanf("%lf", &choix);
-    printf("%d", choix);
+    scanf("%d", &choix);
 
     /***************************
      remplissage des tableaux
