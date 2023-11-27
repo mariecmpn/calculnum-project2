@@ -100,7 +100,7 @@ double Adomain(double x, double alpha){
 
 double adomain_direct(double x, double alpha) {
     int nb_iter = recup_nb_iter(nb_iter);
-    int j; // entier pour boucle for
+    int j, i; // entiers pour boucle for
     double L = recup_L(L);
 	int n = recup_n(n);
     /* On ne calcule qu'une seule fois 1/alpha */
@@ -115,31 +115,31 @@ double adomain_direct(double x, double alpha) {
     	switch (n) { // on remplit les tableaux des points de quadrature, et de u_0 en fonction de n
     	case 1:
             	T[0] = 0.;
-            	U[0] = a*h(T[0]);
+            	U[0] = k(x,T[0]);
             	break;
         case 2:
             	T[0] = -1./sqrt(3.);
             	T[1] = 1./sqrt(3.);
-            	U[0] = a*h(T[0]);
-            	U[1] = a*h(T[1]);
+            	U[0] = k(x,T[0]);
+            	U[1] = k(x,T[1]);
             	break;
         case 3:
             	T[0] = -sqrt(3.)/sqrt(5.);
             	T[1] = 0.;
             	T[2] = sqrt(3.)/sqrt(5.);
-            	U[0] = a*h(T[0]);
-            	U[1] = a*h(T[1]);
-            	U[2] = a*h(T[2]);
+            	U[0] = k(x,T[0]);
+            	U[1] = k(x,T[1]);
+            	U[2] = k(x,T[2]);
             	break;
         case 4:
             	T[0] = -sqrt(3./7.-2./7.*sqrt(6./5.));
             	T[1] = -sqrt(3./7.+2./7.*sqrt(6./5.));
             	T[2] = sqrt(3./7.-2./7.*sqrt(6./5.));
             	T[3] = sqrt(3./7.+2./7.*sqrt(6./5.));
-            	U[0] = a*h(T[0]);
-            	U[1] = a*h(T[1]);
-            	U[2] = a*h(T[2]);
-            	U[3] = a*h(T[3]);
+            	U[0] = k(x,T[0]);
+            	U[1] = k(x,T[1]);
+            	U[2] = k(x,T[2]);
+            	U[3] = k(x,T[3]);
             	break;
         case 5:
             	T[0] = 0;
@@ -147,20 +147,22 @@ double adomain_direct(double x, double alpha) {
             	T[2] = -(1./3.)*sqrt(5.+2.*sqrt(10./7.));
             	T[3] = (1./3.)*sqrt(5.-2.*sqrt(10./7.));
             	T[4] = (1./3.)*sqrt(5.+2.*sqrt(10./7.));
-            	U[0] = a*h(T[0]);
-            	U[1] = a*h(T[1]);
-            	U[2] = a*h(T[2]);
-            	U[3] = a*h(T[3]);
-            	U[4] = a*h(T[4]);
+            	U[0] = k(x,T[0]);
+            	U[1] = k(x,T[1]);
+            	U[2] = k(x,T[2]);
+            	U[3] = k(x,T[3]);
+            	U[4] = k(x,T[4]);
         }
 
-        for (j = 1; j <=nb_iter; j++) {
-            	for (j = 0; j<n; j++) {
-                	Un[j] = - a*gauss_approx(T[j],n,0,L,U);
-            	}
-                for (j = 0; j<n; j++) {
-                    U[j] = Un[j];
-                }
+        res = 1.;
+        for (i = 1; i <=nb_iter; i++) {
+            res = res* gauss_approx(x,n,0,L,U);
+            for (j = 0; j<n; j++) {
+                Un[j] = k(U[j], T[j]);
+            }
+            for (j = 0; j<n; j++) {
+                U[j] = Un[j];
+            }
     	}
 
 

@@ -65,20 +65,20 @@ int main() {
 
    double x_i;
    if (choix == 2) { // avec f_3 trouve avec la methode des noyaux iteres
-        FILE *approche;
-        approche = fopen("frontiere_app_noyaux.txt", "w");
+        FILE *approche_noyaux;
+        approche_noyaux = fopen("frontiere_app_noyaux.txt", "w");
         for (i=0; i<22;i++) {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
                     x_i  = x_i+pas;
                     Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha[i]);
-                    fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
-                    fputs(" ", approche);
+                    fprintf(approche_noyaux, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
+                    fputs(" ", approche_noyaux);
                 }
-                fputs("\n", approche); // on change de ligne quand on change de alpha
+                fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
         }
-         fclose(approche); // on ferme le fichier qu'on a ouvert
+         fclose(approche_noyaux); // on ferme le fichier qu'on a ouvert
    }
     else { // avec f_3 trouve avec la methode de decomposition d'Adomain
         FILE *approche;
@@ -88,7 +88,7 @@ int main() {
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
                     x_i  = x_i+pas;
-                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_adomain,eps,Alpha[i]);
+                    Gamma_app[j] = newton(x_i,fonction_T_adomain,derivee_T_adomain,eps,Alpha[i]);
                     fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_adomain.txt
                     fputs(" ", approche);
                 }
