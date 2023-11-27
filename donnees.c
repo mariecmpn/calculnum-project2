@@ -26,5 +26,5 @@ int recup_n(float n) {
 
 int recup_nb_iter(int nb_iter) {
     /* fonction permettant de recuperer le nombre souhaite d'iterations pour les methodes d'approximation de f_3 */
-    return 15;
+    return 16;
 }

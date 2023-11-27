@@ -154,7 +154,7 @@ int main() {
         FILE *ex_omega;
         ex_omega = fopen("solex_omega.txt", "w");
         FILE *erreur;
-        erreur = fopen("erreur_omega.txt", "w");
+        erreur = fopen("erreur_omega_noyaux.txt", "w");
 
         // on calcule les solutions exactes et approchees pour tous les points de maillage du domaine
         double y_i = 0.;
@@ -195,7 +195,7 @@ int main() {
         FILE *ex_omega;
         ex_omega = fopen("solex_omega.txt", "w");
         FILE *erreur;
-        erreur = fopen("erreur_omega.txt", "w");
+        erreur = fopen("erreur_omega_adomain.txt", "w");
 
         // on calcule les solutions exactes et approchees pour tous les points de maillage du domaine
         double y_i = 0.;

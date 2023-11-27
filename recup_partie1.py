@@ -142,13 +142,21 @@ SolEx = np.array(SolEx)
 SolEx = np.split(SolEx, N)
 Zex = np.vstack(SolEx)
 
-file = open('erreur_omega.txt', 'r')
+file = open('erreur_omega_noyaux.txt', 'r')
 data = file.read()
 ERR = data.split()
 ERR = [float(i) for i in ERR]
 ERR = np.array(ERR)
 ERR = np.split(ERR, N)
 Zerr = np.vstack(ERR)
+
+file = open('erreur_omega_adomain.txt', 'r')
+data = file.read()
+ERR = data.split()
+ERR = [float(i) for i in ERR]
+ERR = np.array(ERR)
+ERR = np.split(ERR, N)
+Zerr_ado = np.vstack(ERR)
 
 
 #%% graphiques pour un alpha donne
@@ -193,7 +201,16 @@ clev = np.arange(Zerr.min(),Zerr.max(),0.1)
 h = plt.contourf(X, Y, Zerr, clev)
 plt.axis('scaled')
 plt.colorbar()
-plt.title('Erreur: T_ex-T_cal')
+plt.title('Erreur: T_ex-T_cal (noyaux)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
+
+clev = np.arange(Zerr_ado.min(),Zerr.max(),0.1)
+h = plt.contourf(X, Y, Zerr_ado, clev)
+plt.axis('scaled')
+plt.colorbar()
+plt.title('Erreur: T_ex-T_cal (Adomain)')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()

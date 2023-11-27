@@ -16,11 +16,11 @@ double Adomain(double x, double alpha){
 	int n = recup_n(n);
 	int nb_iter = recup_nb_iter(nb_iter);
 	
-	/* Notre résultat est stocké dans res*/
-	double res = 0.;
-	
 	/* On ne calcule qu'une seule fois 1/alpha */
 	double a = 1./alpha;
+
+    /* Notre résultat est stocké dans res*/
+	double res = a*h(x);
 
     	int i,j; //entiers pour les boucles for
 
@@ -98,13 +98,14 @@ double Adomain(double x, double alpha){
 /* Créer une fonction pour intégrer la fonction calculée par la méthodes de Gauss */
 
 
-/*double adomain_direct(double x, double alpha) {
+double adomain_direct(double x, double alpha) {
     int nb_iter = recup_nb_iter(nb_iter);
     int j; // entier pour boucle for
     double L = recup_L(L);
 	int n = recup_n(n);
-    /* On ne calcule qu'une seule fois 1/alpha 
+    /* On ne calcule qu'une seule fois 1/alpha */
 	double a = 1./alpha;
+    double res;
 
     // on definit u_0
     	double *T = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les points de quadrature
@@ -153,7 +154,7 @@ double Adomain(double x, double alpha){
             	U[4] = a*h(T[4]);
         }
 
-        for (i = 1; i <=nb_iter; i++) {
+        for (j = 1; j <=nb_iter; j++) {
             	for (j = 0; j<n; j++) {
                 	Un[j] = - a*gauss_approx(T[j],n,0,L,U);
             	}
@@ -162,6 +163,8 @@ double Adomain(double x, double alpha){
                 }
     	}
 
+
+
     // on libere l'espace memoire des tableaux alloues dynamiquement
     
 	free(T);
@@ -169,4 +172,4 @@ double Adomain(double x, double alpha){
 	free(Un);
 	
 	return res;
-}*/
+}
