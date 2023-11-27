@@ -93,3 +93,9 @@ double Adomain(double x, double alpha){
 /* Le fichier doit renvoyer la fonction f3 app par la méthode d'Adomain sous le format double f3_Ad(x) */
 
 /* Créer une fonction pour intégrer la fonction calculée par la méthodes de Gauss */
+
+
+double adomain_direct(double x, double alpha) {
+    int nb_iter = recup_nb_iter(nb_iter);
+    
+}

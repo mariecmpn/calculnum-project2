@@ -192,3 +192,4 @@ double noyaux_iter(double x, double alpha) {
 
     return u_n;
 }
+

@@ -24,7 +24,7 @@ int recup_n(float n) {
     return 5;
 }
 
-int recup_nb_iter(float nb_iter) {
+int recup_nb_iter(int nb_iter) {
     /* fonction permettant de recuperer le nombre souhaite d'iterations pour les methodes d'approximation de f_3 */
     return 6;
 }
