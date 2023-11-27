@@ -59,7 +59,7 @@ Gamma_alpha = np.split(App, 22)
  
 #%% graphiques
 
-alpha = 1
+alpha = 0
 plt.plot(X, Ex, label = 'frontiere exacte')
 plt.plot(X, Gamma_alpha[alpha], label = 'frontiere approchee')
 plt.axis([0.,1.,0.,1.])

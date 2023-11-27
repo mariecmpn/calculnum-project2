@@ -35,21 +35,22 @@ int main() {
 
     double y = H; // on se place sur Gamma_3
 
-    int choix;
+    int choix; // entier qui designe avec quelle methode on calcule f_3
 
     /***************************
      Choix de la methode de
      resolution de l'equation
      de Fredholm
     ****************************/
-    choix = 0;
-    while ((choix != 1) && (choix != 2)) { // si le choix n'est pas 1 ou 2, on redemande a nouveau a l'utilisateur son choix
-        printf("%s\n", "Choix de la methode de resolution de l'equation de Fredholm: ");
-        printf("%s\n", "1: Methode de resolution d'Adomain");
-        printf("%s\n", "2: Methode des noyaux iteres");
-        printf("%s", "Choix = ");
-        scanf("%lf", &choix);
-    }
+    
+    printf("%s\n", "Choix de la methode de resolution de l'equation de Fredholm: ");
+    printf("%s\n", "1: Methode de resolution d'Adomain");
+    printf("%s\n", "2: Methode des noyaux iteres");
+    printf("%s\n", "(Par defaut: methode d'Adomain)");
+    printf("%s", "Choix = ");
+    scanf("%lf", &choix);
+    printf("%d", choix);
+
 
 
     /***************************
@@ -147,9 +148,10 @@ int main() {
     optimal
     ****************************/ 
 
-   // POUR LA METHODE DES NOYAUX ITERES
+    double alpha_optim = 1.; // on definit notre alpha optimal
+    // POUR LA METHODE DES NOYAUX ITERES
     if (choix == 2) {
-        double alpha_optim = 1.;
+        double alpha_optim = 10.;
         FILE *app_omega;
         app_omega = fopen("solapp_omega_noyaux.txt", "w");
         FILE *ex_omega;
@@ -191,7 +193,6 @@ int main() {
 
     // POUR LA METHODE D'ADOMAIN
         else {
-            double alpha_optim = 1.;
         FILE *app_omega;
         app_omega = fopen("solapp_omega_adomain.txt", "w");
         FILE *ex_omega;

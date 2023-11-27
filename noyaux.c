@@ -9,9 +9,10 @@ double k(double x, double t) {
     int M = recup_M(M);
     double H = recup_H(H), L = recup_L(L);
     int m;
+    double l = 1./L; // au lieu de diviser a chaque fois on calcule 1/L une seule fois
     double K = 1./(H*L);
     for (m = 1; m<=M; m++) {
-        K = K + (2*M_PI/pow(L,2))*m*cos(m*M_PI*x/L)*cos(m*M_PI*t/L)/sinh(m*M_PI*H/L);
+        K = K + (2*M_PI*l*l)*m*cos(m*M_PI*x*l)*cos(m*M_PI*t*l)/sinh(m*M_PI*H*l);
     }
     return K;
 }
@@ -29,13 +30,14 @@ double h(double x) {
     H = recup_H(H);
     M = recup_M(M);
     n = recup_n(n);
+    double l = 1./L; // au lieu de diviser a chaque fois on calcule 1/L une seule fois
     // puis on retourne la fonction souhaitee
     /*S = -q_0(x) + (1/(L*H))*gauss(n,f_0,0,L,0,0);
     for (i = 1; i<=M; i++) {
         //S = S + (2*M_PI/pow(L,2)) * (i*cos(i*M_PI*x/L)/sinh(i*M_PI*x/L)) * f_0(x,i,0.) * cosh(i*M_PI*H/L) * gauss(n,inte_h,0,L,i,0);
         S = S + (2*M_PI/pow(L,2)) * ((i*cos(i*M_PI*x/L)*cosh(i*M_PI*H/L))/sinh(i*M_PI*H/L))* gauss(n,inte_h,0.,L,i,0.);
     }*/
-    S = (M_PI/L)*(cos(M_PI*x/L)*cosh(M_PI*H/L))/sinh(M_PI*H/L); // on enleve la somme pour cet exemple
+    S = (M_PI*l)*(cos(M_PI*x*l)*cosh(M_PI*H*l))/sinh(M_PI*H*l); // on enleve la somme pour cet exemple
     return S;
 }
 
@@ -126,6 +128,7 @@ double noyaux_iter(double x, double alpha) {
     double *U = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n-1 a chaque iteration n
     double *Un = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n a chaque iteration n
     switch (n) { // on remplit les tableaux des points de quadrature, et de u_0 en fonction de n
+    // pour la premiere iteration on prend u_0(x) = 1/alpha * h(x)
         case 1:
             T[0] = 0.;
             U[0] = a*h(T[0]);

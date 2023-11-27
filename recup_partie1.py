@@ -59,27 +59,49 @@ App = np.array(Approche)
 # On divise le tableau en 20 tableaux (1 tableau pour chaque alpha)
 T_alpha = np.split(App, 22)
 
+# solution approchee sur Gamma_3
+file = open('approche_noyaux.txt', 'r')
+
+data = file.read()
+Approche = data.split()
+Approche = [float(i) for i in Approche]
+App_ado = np.array(Approche)
+
+#print(App)
+
+# On divise le tableau en 20 tableaux (1 tableau pour chaque alpha)
+T_alpha_ado = np.split(App_ado, 22)
+
 #%% calcul des erreurs
 
-Err = np.zeros(22)
+Err_noyaux = np.zeros(22)
 for i in range(22):
     Err[i] = np.linalg.norm(T_alpha[i] - Ex)
 
-
+Err_ado = np.zeros(22)
+for i in range(22):
+    Err_ado[i] = np.linalg.norm(T_alpha_ado[i] - Ex)
 
 #%% graphiques
 
 plt.loglog(Alpha, Err)
-plt.title('Erreur entre les solutions exacte et approchée sur Gamma_3')
+plt.title('Erreur entre les solutions exacte et approchée (noyaux) sur Gamma_3')
 plt.show()
 
+plt.loglog(Alpha, Err_ado)
+plt.title('Erreur entre les solutions exacte et approchée (Adomain) sur Gamma_3')
+plt.show()
 
 plt.plot(X, Ex)
 plt.title('Solution exacte T_ex sur Gamma_3')
 plt.show()
 
-plt.plot(X, T_alpha[0])
-plt.title('Solution approchee T_app sur Gamma_3')
+plt.plot(X, T_alpha[1])
+plt.title('Solution approchee par la méthode des noyaux itérés T_app sur Gamma_3 pour alpha = 1.0')
+plt.show()
+
+plt.plot(X, T_alpha[1])
+plt.title('Solution approchee par la méthode d Adomain T_app sur Gamma_3 pour alpha = 1.0')
 plt.show()
 
 
@@ -94,7 +116,7 @@ def f(x,y):
 
 #%% lecture des fichiers pour un alpha donne = 1.
 
-alpha = 1.
+alpha = 10.
 
 file = open('solapp_omega_noyaux.txt', 'r')
 data = file.read()

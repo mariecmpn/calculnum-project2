@@ -32,11 +32,19 @@ double T_0(double x) {
     return r;
 }
 
-double fonction_T(double x, double y, double alpha) {
+double fonction_T_noyaux(double x, double y, double alpha) {
     /* fonction qui retourne la fonction utilisee pour Newton: T_tilde(x,y) - T_0(x) (pour un alpha et x donne)
     x,y: coordonnees dont on veut calculer l'image
     alpha: parametre de Lavrentier utilise dans l'approximation de T_tilde */
-    double r = T_tilde(x,y,alpha) - T_0(x);
+    double r = T_tilde_noyaux(x,y,alpha) - T_0(x);
+    return r;
+}
+
+double fonction_T_adomain(double x, double y, double alpha) {
+    /* fonction qui retourne la fonction utilisee pour Newton: T_tilde(x,y) - T_0(x) (pour un alpha et x donne)
+    x,y: coordonnees dont on veut calculer l'image
+    alpha: parametre de Lavrentier utilise dans l'approximation de T_tilde */
+    double r = T_tilde_adomain(x,y,alpha) - T_0(x);
     return r;
 }
 

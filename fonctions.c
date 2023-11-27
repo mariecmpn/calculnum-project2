@@ -43,42 +43,6 @@ double q_0(double x) {
     return 0.;
 }
 
-/************************
- fonctions a approcher
-*************************/
-
-double inte_f3(double x, int m, double alpha) {
-    /* fonction que l'on integre dans l'expression de f_3 */
-    //on recupere les donnees du probleme
-    float L;
-    L = recup_L(L);
-    double r = cos(m*M_PI*x/L)*h(x)+ 0.*alpha;
-    return r;
-}
-
-double f_3(double x, double alpha){
-    /* fonction qui approche f_3 
-    x: reel dont on veut calculer l'image par f_3
-    alpha: parametre de Lavrentier */
-    int i;
-    double S;
-    //on recupere les donnees du probleme
-    double L,H;
-    double a;
-    int M,n;
-    L = recup_L(L);
-    H = recup_H(H);
-    M = recup_M(M);
-    n = recup_n(n);
-
-    a = (1./alpha);
-    S = a*h(x) - a*(H/(alpha*H + 1.))*gauss(n,inte_h,0,L,0,alpha);
-    //printf("%f\n",S);
-    for (i=1; i <= M; i++) {
-        S = S - a * (L*sinh((i*M_PI*H)/L) / (i*M_PI+alpha*L*sinh((i*M_PI*H)/L))) * cos((i*M_PI*x)/L) * gauss(n,inte_f3,0,L,i,alpha); 
-    }
-    return S;
-}
 
 /*************************
  fonctions a integrer pour
@@ -86,7 +50,7 @@ double f_3(double x, double alpha){
 **************************/
 
 double B0_f3_f0_noyaux(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient B_0
+    /* fonction a integer pour le coefficient B_0 pour la methode des noyaux iteres
     car en argument de gauss() il faut une fonction
     x: reel dont on veut calculer l'image */
     //double r = f_3(x,alpha)- f_0(x,m,alpha);
@@ -95,7 +59,7 @@ double B0_f3_f0_noyaux(double x, int m, double alpha){
 }
 
 double Am_f3_noyaux(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient A_m
+    /* fonction a integer pour le coefficient A_m pour la methode des noyaux iteres
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
     
@@ -112,7 +76,7 @@ double Am_f3_noyaux(double x, int m, double alpha){
 }
 
 double Am_f0_noyaux(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient A_m
+    /* fonction a integer pour le coefficient A_m pour la methode des noyaux iteres
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
     
@@ -129,7 +93,7 @@ double Am_f0_noyaux(double x, int m, double alpha){
 }
 
 double Bm_f0_noyaux(double x, int m, double alpha) {
-    /* fonction a integer pour le coefficient B_m ()
+    /* fonction a integer pour le coefficient B_m pour la methode des noyaux iteres
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
     
@@ -146,7 +110,7 @@ double Bm_f0_noyaux(double x, int m, double alpha) {
 }
 
 double Bm_f3_noyaux(double x, int m, double alpha) {
-    /* fonction a integer pour le coefficient B_m
+    /* fonction a integer pour le coefficient B_m pour la methode des noyaux iteres
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
     
@@ -163,7 +127,7 @@ double Bm_f3_noyaux(double x, int m, double alpha) {
 }
 
 double B0_f3_f0_adomain(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient B_0
+    /* fonction a integer pour le coefficient B_0 pour la methode de decomposition d'Adomain
     car en argument de gauss() il faut une fonction
     x: reel dont on veut calculer l'image */
     //double r = f_3(x,alpha)- f_0(x,m,alpha);
@@ -172,7 +136,7 @@ double B0_f3_f0_adomain(double x, int m, double alpha){
 }
 
 double Am_f3_adomain(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient A_m
+    /* fonction a integer pour le coefficient A_m pour la methode de decomposition d'Adomain
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
     
@@ -189,7 +153,7 @@ double Am_f3_adomain(double x, int m, double alpha){
 }
 
 double Am_f0_adomain(double x, int m, double alpha){
-    /* fonction a integer pour le coefficient A_m
+    /* fonction a integer pour le coefficient A_m pour la methode de decomposition d'Adomain
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
     
@@ -206,7 +170,7 @@ double Am_f0_adomain(double x, int m, double alpha){
 }
 
 double Bm_f0_adomain(double x, int m, double alpha) {
-    /* fonction a integer pour le coefficient B_m ()
+    /* fonction a integer pour le coefficient B_m pour la methode de decomposition d'Adomain
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
     
@@ -223,7 +187,7 @@ double Bm_f0_adomain(double x, int m, double alpha) {
 }
 
 double Bm_f3_adomain(double x, int m, double alpha) {
-    /* fonction a integer pour le coefficient B_m
+    /* fonction a integer pour le coefficient B_m pour la methode de decomposition d'Adomain
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
     
@@ -244,7 +208,7 @@ double Bm_f3_adomain(double x, int m, double alpha) {
 *************************/
 
 double A_0_noyaux() {
-    /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde pour la methode des noyaux iteres */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -258,7 +222,7 @@ double A_0_noyaux() {
 }
 
 double B_0_noyaux(double alpha) {
-    /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde pour la methode des noyaux iteres */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -272,7 +236,7 @@ double B_0_noyaux(double alpha) {
 }
 
 double A_m_noyaux(int m, double alpha) {
-    /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde pour la methode des noyaux iteres */
     //on recupere d'abord les donnees du probleme
     float L,H;
     int M,n;
@@ -286,7 +250,7 @@ double A_m_noyaux(int m, double alpha) {
 }
 
 double B_m_noyaux(int m, double alpha) {
-    /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde pour la methode des noyaux iteres */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -300,7 +264,7 @@ double B_m_noyaux(int m, double alpha) {
 }
 
 double A_0_adomain() {
-    /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde pour la methode de decomposition d'Adomain */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -314,7 +278,7 @@ double A_0_adomain() {
 }
 
 double B_0_adomain(double alpha) {
-    /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde pour la methode de decomposition d'Adomain */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -328,7 +292,7 @@ double B_0_adomain(double alpha) {
 }
 
 double A_m_adomain(int m, double alpha) {
-    /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde pour la methode de decomposition d'Adomain */
     //on recupere d'abord les donnees du probleme
     float L,H;
     int M,n;
@@ -342,7 +306,7 @@ double A_m_adomain(int m, double alpha) {
 }
 
 double B_m_adomain(int m, double alpha) {
-    /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde */
+    /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde pour la methode de decomposition d'Adomain */
     //on recupere d'abord les donnees du probleme
     double L,H;
     int M,n;
@@ -360,7 +324,7 @@ double B_m_adomain(int m, double alpha) {
 *************************/
 
 double T_tilde_noyaux(double x, double y, double alpha) {
-    /* fonction qui donne l'approximation de T_tilde */
+    /* fonction qui donne l'approximation de T_tilde par la methode des noyaux iteres */
     double T;
     int i;
     //on recupere d'abord les donnees du probleme
@@ -381,7 +345,7 @@ double T_tilde_noyaux(double x, double y, double alpha) {
 }
 
 double T_tilde_adomain(double x, double y, double alpha) {
-    /* fonction qui donne l'approximation de T_tilde */
+    /* fonction qui donne l'approximation de T_tilde par la methode de decomposition d'Adomain */
     double T;
     int i;
     //on recupere d'abord les donnees du probleme
@@ -392,10 +356,10 @@ double T_tilde_adomain(double x, double y, double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    T = A_0_noyaux()+ B_0_noyaux(alpha)*y;
+    T = A_0_adomain()+ B_0_adomain(alpha)*y;
     //printf("%f\n", T);
     for (i = 1; i<=M; i++) {
-        T = T + (A_m_noyaux(i,alpha)*exp(i*M_PI*y/L) + B_m_noyaux(i,alpha)*exp(-i*M_PI*y/L))*cos(i*M_PI*x/L);
+        T = T + (A_m_adomain(i,alpha)*exp(i*M_PI*y/L) + B_m_adomain(i,alpha)*exp(-i*M_PI*y/L))*cos(i*M_PI*x/L);
         //printf("%f\n", T);
     }
     return T;
