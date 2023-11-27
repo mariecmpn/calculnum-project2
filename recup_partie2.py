@@ -55,13 +55,27 @@ App = np.array(Approche)
 # On divise le tableau en 20 tableaux (1 tableau pour chaque alpha)
 Gamma_alpha = np.split(App, 22)
 
+# solution approchee sur Gamma_3
+file = open('frontiere_app_adomain.txt', 'r')
+
+data = file.read()
+Approche = data.split()
+Approche = [float(i) for i in Approche]
+App_ado = np.array(Approche)
+
+#print(App)
+
+# On divise le tableau en 20 tableaux (1 tableau pour chaque alpha)
+Gamma_alpha_ado = np.split(App_ado, 22)
+
 
  
 #%% graphiques
 
 alpha = 1
 plt.plot(X, Ex, label = 'frontiere exacte')
-plt.plot(X, Gamma_alpha[alpha], label = 'frontiere approchee')
+plt.plot(X, Gamma_alpha[alpha], label = 'frontiere approchee avec noyaux')
+plt.plot(X, Gamma_alpha_ado[alpha], label = 'frontiere approchee avec Adomain')
 #plt.axis([0.,1.,0.,1.])
 plt.legend()
 plt.title('Frontieres Gamma exacte et approchee')

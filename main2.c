@@ -22,9 +22,10 @@ int main() {
     double L = recup_L(L), H = recup_H(H);
     int M = recup_M(M), n = recup_n(n);
 
-    double Alpha[22]; // tableau qui contient les differentes valeurs de alpha
-
-    double *Gamma_app = malloc(sizeof(int[N])); // tableau qui contient les images des x_i par T_alpha calculees numeriquement
+    double Alpha;
+    //double Alpha[22]; // tableau qui contient les differentes valeurs de alpha
+    double Gamma_app;
+    //double *Gamma_app = malloc(sizeof(int[N])); // tableau qui contient les images des x_i par T_alpha calculees numeriquement
     double *Gamma_exact = malloc(sizeof(int[N])); // tableau qui contient les images des x_i par T_ex calculees numeriquement
     int choix; // entier qui designe avec quelle methode on calcule f_3
 
@@ -46,11 +47,7 @@ int main() {
     ****************************/ 
 
     // remplissage de Alpha
-    Alpha[0] = 10.;
-    Alpha[1] = 1.;
-    for (i = 2; i<22; i++) {
-        Alpha[i] = 1./pow(10.,i+1);
-    }
+    Alpha = 10.;
 
 
     /***************************
@@ -66,11 +63,12 @@ int main() {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
-                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha[i]);
-                    fprintf(approche_noyaux, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
+                    Gamma_app = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha);
+                    fprintf(approche_noyaux, "%g", Gamma_app); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
                     fputs(" ", approche_noyaux);
                     x_i  = x_i+pas;
                 }
+                Alpha = Alpha*0.1;
                 fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
         }
          fclose(approche_noyaux); // on ferme le fichier qu'on a ouvert
@@ -82,11 +80,12 @@ int main() {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
-                    Gamma_app[j] = newton(x_i,fonction_T_adomain,derivee_T_adomain,eps,Alpha[i]);
-                    fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_adomain.txt
+                    Gamma_app = newton(x_i,fonction_T_adomain,derivee_T_adomain,eps,Alpha);
+                    fprintf(approche, "%g", Gamma_app); // on l'enregistre dans le fichier frontiere_app_adomain.txt
                     fputs(" ", approche);
                     x_i  = x_i+pas;
                 }
+                Alpha = Alpha*0.1;
                 fputs("\n", approche); // on change de ligne quand on change de alpha
         }
          fclose(approche); // on ferme le fichier qu'on a ouvert
@@ -101,10 +100,10 @@ int main() {
     x_i = 0.;
     for (j = 0; j < N; j++) {
         Points[j] = x_i;
-        x_i  = x_i+pas;
-        Gamma_exact[i] = Gamma_ex(Points[i]);
+        Gamma_exact[j] = Gamma_ex(x_i);
         fprintf(exact, "%g", Gamma_exact[j]); // on l'enregistre dans le fichier frontiere_ex.txt
         fputs(" ", exact);
+        x_i  = x_i+pas;
     }
 
     // on ferme les fichiers qu'on a ouvert
@@ -112,7 +111,7 @@ int main() {
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement
     free(Points);
-    free(Gamma_app);
+    //free(Gamma_app);
     free(Gamma_exact);
 
     // on retourne 0

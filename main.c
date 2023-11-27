@@ -24,7 +24,7 @@ int main() {
     double *Points = malloc(sizeof(int[Nx])); // tableau qui contient les valeurs des x_i
     double *Y = malloc(sizeof(int[Ny])); // tableau qui contient les y_i
 
-    double Alpha[22]; // tableau qui contient les differentes valeurs de alpha
+    //double Alpha[22]; // tableau qui contient les differentes valeurs de alpha
 
     // recuperation des donnees du probleme definies dans donnees.c
     double L = recup_L(L), H = recup_H(H);
@@ -62,13 +62,13 @@ int main() {
         x_i  = x_i+pas;
         //printf("%f\n", Points[i]);
     }*/
-
+    double Alpha = 10.;
     // remplissage de Alpha
-    Alpha[0] = 10.;
+    /*Alpha[0] = 10.;
     Alpha[1] = 1.;
     for (i = 2; i<22; i++) {
         Alpha[i] = 1./pow(10.,i+1);
-    }
+    }*/
 
 
     // remplissage de Points
@@ -95,12 +95,13 @@ int main() {
         approche_noyaux = fopen("approche_noyaux.txt", "w"); // on ouvre le fichier en ecriture
         for (i = 0; i < 22; i++) {
             for (j = 0; j < Nx; j++) {
-                T_app[j] = noyaux_iter(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                T_app[j] = noyaux_iter(Points[j], Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
                 //printf("%f", Points[j]);
                 fprintf(approche_noyaux, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
                 fputs(" ", approche_noyaux);
             }
             fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
+            Alpha = Alpha*0.1;
         }
 
         fclose(approche_noyaux); // on ferme le fichier une fois qu'il est rempli
@@ -111,12 +112,13 @@ int main() {
         approche_adomain = fopen("approche_adomain.txt", "w"); // on ouvre le fichier en ecriture
         for (i = 0; i < 22; i++) {
             for (j = 0; j < Nx; j++) {
-                T_app[j] = Adomain(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                T_app[j] = Adomain(Points[j], Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
                 //printf("%f", Points[j]);
                 fprintf(approche_adomain, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
                 fputs(" ", approche_adomain);
             }
             fputs("\n", approche_adomain); // on change de ligne quand on change de alpha
+            Alpha = Alpha*0.1;
         }
 
         fclose(approche_adomain); // on ferme le fichier une fois qu'il est rempli
