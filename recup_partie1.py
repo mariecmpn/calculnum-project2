@@ -1,4 +1,4 @@
-# recuperation des donnees pour le projet 1 - calcul numerique scientifique
+# recuperation des donnees pour le projet 2 - calcul numerique scientifique
 # Partie 1 -resolution du probleme de Cauchy
 
 #%% importation packages

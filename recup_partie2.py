@@ -1,5 +1,5 @@
-# recuperation des donnees pour le projet 1 - calcul numerique scientifique
-# Partie 1 -resolution du probleme de Cauchy
+# recuperation des donnees pour le projet 2 - calcul numerique scientifique
+# Partie 2 - determination de la frontiere libre
 
 #%% importation packages
 

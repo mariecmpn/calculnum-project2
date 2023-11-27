@@ -6,6 +6,7 @@
 #include "donnees.h" 
 #include "methodesnum.h"
 #include "noyaux.h"
+#include "adomain.h"
 
 // PROGRAMME PRINCIPAL POUR LA COMPARAISON ENTRE LA METHODE DIRECTE ET INDIRECTE DE LA METHODE D'ADOMAIN
 

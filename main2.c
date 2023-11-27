@@ -45,11 +45,6 @@ int main() {
      remplissage des tableaux
     ****************************/ 
 
-    // remplissage de Gamma_exact
-    for (i = 0; i<N; i++) {
-        Gamma_exact[i] = Gamma_ex(Points[i]);
-    }
-
     // remplissage de Alpha
     Alpha[0] = 10.;
     Alpha[1] = 1.;
@@ -71,10 +66,10 @@ int main() {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
-                    x_i  = x_i+pas;
                     Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha[i]);
                     fprintf(approche_noyaux, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
                     fputs(" ", approche_noyaux);
+                    x_i  = x_i+pas;
                 }
                 fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
         }
@@ -87,10 +82,10 @@ int main() {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
-                    x_i  = x_i+pas;
                     Gamma_app[j] = newton(x_i,fonction_T_adomain,derivee_T_adomain,eps,Alpha[i]);
                     fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_adomain.txt
                     fputs(" ", approche);
+                    x_i  = x_i+pas;
                 }
                 fputs("\n", approche); // on change de ligne quand on change de alpha
         }
@@ -107,7 +102,7 @@ int main() {
     for (j = 0; j < N; j++) {
         Points[j] = x_i;
         x_i  = x_i+pas;
-        Gamma_exact[j] = Gamma_ex(Points[j]);
+        Gamma_exact[i] = Gamma_ex(Points[i]);
         fprintf(exact, "%g", Gamma_exact[j]); // on l'enregistre dans le fichier frontiere_ex.txt
         fputs(" ", exact);
     }
