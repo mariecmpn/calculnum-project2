@@ -1,23 +1,30 @@
 # Compiler used
 # Changer le nom du compilateur si besoin
 CC = gcc-11
+LIBS = -lm
 
 # Regles pour la partie 1 du projet
 
-partie1: main.o methodesnum.o donnees.o fonctions.o
-	$(CC) -o partie1 main.o fonctions.o methodesnum.o donnees.o
+partie1: main.o adomain.o num2.o methodesnum.o donnees.o fonctions.o
+	$(CC) -o partie1 main.o adomain.o num2.o fonctions.o methodesnum.o donnees.o $(LIBS)
 
-methodenum.o: methodesnum.c donnees.h
-	$(CC) -c methodesnum.c
-
-donnees.o: donnees.c
-	$(CC) -c donnees.c
-
+main.o: main.c fonctions.c donnees.h methodesnum.h fonctions.h num2.h adomain.h
+	$(CC) -c main.c $(LIBS)
+	
+adomain.o : adomain.c num2.h fonctions.h donnees.h methodesnum.h fonctions.h
+	$(CC) -c adomain.c $(LIBS)
+	
+num2.o : num2.c fonctions.h methodesnum.h donnees.h
+	$(CC) -c num2.c $(LIBS)
+	
 fonctions.o: fonctions.c donnees.h methodesnum.h
-	$(CC) -c fonctions.c
-
-main.o: main.c fonctions.c donnees.h methodesnum.h fonctions.h
-	$(CC) -c main.c
+	$(CC) -c fonctions.c $(LIBS)
+	
+methodenum.o: methodesnum.c donnees.h
+	$(CC) -c methodesnum.c $(LIBS)
+	
+donnees.o: donnees.c
+	$(CC) -c donnees.c $(LIBS)
 
 # Regles pour la partie 2 du projet
 

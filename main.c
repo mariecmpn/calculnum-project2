@@ -4,6 +4,8 @@
 #include "fonctions.h"
 #include "donnees.h" 
 #include "methodesnum.h"
+#include "adomain.h"
+#include "num2.h"
 
 
 int main() {
