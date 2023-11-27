@@ -16,7 +16,7 @@ double recup_H(float H) {
 
 int recup_M(float M) {
     /* fonction permettant de recuperer le nombre de termes pour les sommes infinies que l'on a tronque */
-    return 10;
+    return 1;
 }
 
 int recup_n(float n) {

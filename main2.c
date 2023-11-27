@@ -73,7 +73,7 @@ int main() {
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
                     x_i  = x_i+pas;
-                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T,eps,Alpha[i]);
+                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha[i]);
                     fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
                     fputs(" ", approche);
                 }
@@ -89,7 +89,7 @@ int main() {
                 for (j=0; j<N; j++) {
                     Points[j] = x_i;
                     x_i  = x_i+pas;
-                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T,eps,Alpha[i]);
+                    Gamma_app[j] = newton(x_i,fonction_T_noyaux,derivee_T_adomain,eps,Alpha[i]);
                     fprintf(approche, "%g", Gamma_app[j]); // on l'enregistre dans le fichier frontiere_app_adomain.txt
                     fputs(" ", approche);
                 }

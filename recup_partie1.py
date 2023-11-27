@@ -60,7 +60,7 @@ App = np.array(Approche)
 T_alpha = np.split(App, 22)
 
 # solution approchee sur Gamma_3
-file = open('approche_noyaux.txt', 'r')
+file = open('approche_adomain.txt', 'r')
 
 data = file.read()
 Approche = data.split()
@@ -74,7 +74,7 @@ T_alpha_ado = np.split(App_ado, 22)
 
 #%% calcul des erreurs
 
-Err_noyaux = np.zeros(22)
+Err = np.zeros(22)
 for i in range(22):
     Err[i] = np.linalg.norm(T_alpha[i] - Ex)
 
@@ -100,7 +100,7 @@ plt.plot(X, T_alpha[1])
 plt.title('Solution approchee par la méthode des noyaux itérés T_app sur Gamma_3 pour alpha = 1.0')
 plt.show()
 
-plt.plot(X, T_alpha[1])
+plt.plot(X, T_alpha_ado[1])
 plt.title('Solution approchee par la méthode d Adomain T_app sur Gamma_3 pour alpha = 1.0')
 plt.show()
 
@@ -116,7 +116,7 @@ def f(x,y):
 
 #%% lecture des fichiers pour un alpha donne = 1.
 
-alpha = 10.
+alpha = 1.
 
 file = open('solapp_omega_noyaux.txt', 'r')
 data = file.read()

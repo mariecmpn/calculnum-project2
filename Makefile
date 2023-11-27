@@ -4,7 +4,7 @@ CC = gcc-11
 
 # Regles pour la partie 1 du projet
 partie1: main.o methodesnum.o donnees.o fonctions.o noyaux.o
-	$(CC) -o partie1 main.o fonctions.o noyaux.o methodesnum.o donnees.o
+	$(CC) -o partie1 main.o fonctions.o noyaux.o adomain.o methodesnum.o donnees.o
 
 methodenum.o: methodesnum.c donnees.h
 	$(CC) -c methodesnum.c
@@ -21,14 +21,17 @@ main.o: main.c noyaux.h adomain.h donnees.h methodesnum.h fonctions.h
 noyaux.o: noyaux.c methodesnum.h donnees.h
 	$(CC) -c noyaux.c
 
-# Regles pour la partie 2 du projet
-partie2: main2.o methodesnum.o donnees.o fonctions.o fonctions2.o
-	$(CC) -o partie2 main2.o fonctions2.o fonctions.o methodesnum.o donnees.o
+adomain.o: adomain.c methodesnum.h donnees.h
+	$(CC) -c adomain.c
 
-fonctions2.o: fonctions2.c donnees.h fonctions.h methodesnum.h
+# Regles pour la partie 2 du projet
+partie2: main2.o methodesnum.o donnees.o fonctions.o fonctions2.o noyaux.o adomain.o
+	$(CC) -o partie2 main2.o fonctions2.o fonctions.o adomain.o noyaux.o methodesnum.o donnees.o
+
+fonctions2.o: fonctions2.c donnees.h fonctions.h methodesnum.h noyaux.h adomain.h
 	$(CC) -c fonctions2.c
 
-main2.o: main2.c fonctions2.h donnees.h fonctions.h methodesnum.h
+main2.o: main2.c fonctions2.h donnees.h fonctions.h methodesnum.h noyaux.h adomain.h
 	$(CC) -c main2.c 
 
 # Regles pour la comparaison entre les methodes directe et indirecte d'Adomain

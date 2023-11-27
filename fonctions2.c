@@ -5,16 +5,31 @@
 #include "fonctions.h" // besoin des fonctions de la partie 1 pour calculer T_tilde
 #include "methodesnum.h" // besoin de la methode de Newton
 #include "fonctions2.h" // header de ce fichier
+#include "noyaux.h"
+#include "adomain.h"
 
-double derivee_T(double x, double y, double alpha) {
-    /* fonction qui calcule la derivee de T_tilde(x,y)
+double derivee_T_noyaux(double x, double y, double alpha) {
+    /* fonction qui calcule la derivee de T_tilde(x,y) avec f_3 calculee par la methode des noyaux iteres
     x, y: coordonnees du point pour lequel on calcule la derivee
     alpha: parametre de Lavrentier utilise pour calculer f_3 */
-    double S = B_0(alpha);
+    double S = B_0_noyaux(alpha);
     double L = recup_L(L);
     int i, M = recup_M(M);
     for (i = 1; i <= M; i++) {
-        S = S + ((i*M_PI/L)*A_m(i,alpha)*exp((i*M_PI/L)*y) - (i*M_PI/L)*B_m(i,alpha)*exp((-i*M_PI/L)*y))*cos((i*M_PI/L)*x);
+        S = S + ((i*M_PI/L)*A_m_noyaux(i,alpha)*exp((i*M_PI/L)*y) - (i*M_PI/L)*B_m_noyaux(i,alpha)*exp((-i*M_PI/L)*y))*cos((i*M_PI/L)*x);
+    }
+    return S;
+}
+
+double derivee_T_adomain(double x, double y, double alpha) {
+    /* fonction qui calcule la derivee de T_tilde(x,y) avec f_3 calculee par la methode d'Adomain
+    x, y: coordonnees du point pour lequel on calcule la derivee
+    alpha: parametre de Lavrentier utilise pour calculer f_3 */
+    double S = B_0_adomain(alpha);
+    double L = recup_L(L);
+    int i, M = recup_M(M);
+    for (i = 1; i <= M; i++) {
+        S = S + ((i*M_PI/L)*A_m_adomain(i,alpha)*exp((i*M_PI/L)*y) - (i*M_PI/L)*B_m_adomain(i,alpha)*exp((-i*M_PI/L)*y))*cos((i*M_PI/L)*x);
     }
     return S;
 }

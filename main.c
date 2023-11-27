@@ -48,9 +48,7 @@ int main() {
     printf("%s\n", "2: Methode des noyaux iteres");
     printf("%s\n", "(Par defaut: methode d'Adomain)");
     printf("%s", "Choix = ");
-    scanf("%lf", &choix);
-    printf("%d", choix);
-
+    scanf("%d", &choix);
 
 
     /***************************
@@ -151,7 +149,6 @@ int main() {
     double alpha_optim = 1.; // on definit notre alpha optimal
     // POUR LA METHODE DES NOYAUX ITERES
     if (choix == 2) {
-        double alpha_optim = 10.;
         FILE *app_omega;
         app_omega = fopen("solapp_omega_noyaux.txt", "w");
         FILE *ex_omega;
@@ -231,8 +228,6 @@ int main() {
             fclose(ex_omega);
             fclose(erreur);
         }
-
-
 
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement

@@ -11,7 +11,7 @@ double k(double x, double t) {
     int m;
     double l = 1./L; // au lieu de diviser a chaque fois on calcule 1/L une seule fois
     double K = 1./(H*L);
-    for (m = 1; m<=M; m++) {
+    for (m = 1; m<=2; m++) {
         K = K + (2*M_PI*l*l)*m*cos(m*M_PI*x*l)*cos(m*M_PI*t*l)/sinh(m*M_PI*H*l);
     }
     return K;
