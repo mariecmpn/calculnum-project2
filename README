@@ -1,7 +1,27 @@
-Projet 2 - Calcul scientifuqe numerique
+Projet 2 - Calcul scientifique numerique
 Approximation de l'equation de Fredholm de deuxieme espece et application a un probleme de frontiere libre
 
 Authors: COMPAIN Marie et FOURNY Lucas
 
-CONTENU DU FICHIER:
+CONTENU DU DOSSIER:
+- main.c: code en C qui contient le programme principal de la partie 1 du projet (resolution du probleme de Cauchy);
+- methodesnum.c: code en C des methodes numeriques utilisees (quadrature de Gauss-Legendre, methode de Newton);
+- methodesnum.h: fichier header de methodesnum.c;
+- fonctions.c: code en C des differents coefficients A_m et B_m pour la resolution du probleme de Cauchy, les fonctions utilisees dans les differentes quadratures, les fonctions exactes;
+- fonctions.h: fichier header de fonctions.c;
+- donnees.c: code en C qui permet de definir les coefficients utiles a la resolution du probleme (longueur et largeur du domaine, nombre de termes dans les sommes, nombre de points de quadrature...);
+- donnees.h: fichier header de donnees.c;
+- noyaux.c: code en C pour la resolution de l'equation de Fredholm par la methode des noyaux iteres;
+- noyaux.h: fichier header de noyaux.c;
+- adomain.c: code en C pour la resolution de l'equation de Fredholm par la methode de resolution d'Adomain;
+- adomain.h: fichier header d'adomain.c;
+- main_adomain.c: programme principal pour la comparaison entre les methodes directe et indirecte d'Adomain;
+- main2.c: code en C qui contient le programme principal de la partie 2 du projet (determination de la frontiere libre);
+- recup_partie1.py: code Python pour creer les graphiques de la partie 1 du projet;
+- recup_partie2.py: code Python pour creer les graphiques de la partie 2 du projet;
 
+REGLES DE COMPILATION:
+- partie1: regle de compilation pour la premiere partie du projet (resolution du probleme de Cauchy);
+- partie2: regle de compilation pour la deuxieme partie du projet (determination de la frontiere libre);
+- comp_adomain: regle de compilation pour la comparaison entre la methode directe et la methode indirecte d'Adomain;
+- clean: efface les fichiers binaires et les fichiers executables.

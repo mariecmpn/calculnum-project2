@@ -4,14 +4,20 @@
 #include "fonctions.h"
 #include "donnees.h" 
 #include "methodesnum.h"
+<<<<<<< HEAD
 #include "adomain.h"
 #include "num2.h"
+=======
+#include "noyaux.h"
+#include "adomain.h"
+>>>>>>> main
 
+// PROGRAMME PRINCIPAL POUR LA PARTIE 1 DU PROJET: RESOLUTION DU PROBLEME DE CAUCHY
 
 int main() {
 
     /***************************
-     definition des variables 
+     Definition des variables 
     ****************************/ 
 
     int i, j; // entiers pour les boucles for
@@ -19,7 +25,7 @@ int main() {
     int Ny = 51; // nombre de points de maillage en y
     int Napp = Nx, Nex = Nx;
     double pasx = 1./(Nx-1); // pas de maillage en x
-    double pasy = 1./(Ny-1); // pas de maillage en x
+    double pasy = 1./(Ny-1); // pas de maillage en y
     double *Points = malloc(sizeof(int[Nx])); // tableau qui contient les valeurs des x_i
     double *Y = malloc(sizeof(int[Ny])); // tableau qui contient les y_i
 
@@ -34,6 +40,20 @@ int main() {
 
     double y = H; // on se place sur Gamma_3
 
+    int choix; // entier qui designe avec quelle methode on calcule f_3
+
+    /***************************
+     Choix de la methode de
+     resolution de l'equation
+     de Fredholm
+    ****************************/
+    
+    printf("%s\n", "Choix de la methode de resolution de l'equation de Fredholm: ");
+    printf("%s\n", "1: Methode de resolution d'Adomain");
+    printf("%s\n", "2: Methode des noyaux iteres");
+    printf("%s\n", "(Par defaut: methode d'Adomain)");
+    printf("%s", "Choix = ");
+    scanf("%d", &choix);
 
 
     /***************************
@@ -73,20 +93,39 @@ int main() {
      approchee
     ****************************/ 
 
-    y = H; // on se place sur Gamma_3
-    FILE *approche;
-    approche = fopen("approche_1.txt", "w"); // on ouvre le fichier en ecriture
-    for (i = 0; i < 22; i++) {
-        for (j = 0; j < Nx; j++) {
-            T_app[j] = f_3(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
-            //printf("%f", Points[j]);
-            fprintf(approche, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
-            fputs(" ", approche);
+   y = H; // on se place sur Gamma_3
+   // POUR LA METHODE DES NOYAUX ITERES
+   if (choix == 2) {
+        FILE *approche_noyaux;
+        approche_noyaux = fopen("approche_noyaux.txt", "w"); // on ouvre le fichier en ecriture
+        for (i = 0; i < 22; i++) {
+            for (j = 0; j < Nx; j++) {
+                T_app[j] = noyaux_iter(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                //printf("%f", Points[j]);
+                fprintf(approche_noyaux, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
+                fputs(" ", approche_noyaux);
+            }
+            fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
         }
-        fputs("\n", approche); // on change de ligne quand on change de alpha
-    }
 
-    fclose(approche); // on ferme le fichier une fois qu'il est rempli
+        fclose(approche_noyaux); // on ferme le fichier une fois qu'il est rempli
+   }
+   // POUR LA METHODE D'ADOMAIN
+   else {
+        FILE *approche_adomain;
+        approche_adomain = fopen("approche_adomain.txt", "w"); // on ouvre le fichier en ecriture
+        for (i = 0; i < 22; i++) {
+            for (j = 0; j < Nx; j++) {
+                T_app[j] = Adomain(Points[j], Alpha[i]); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                //printf("%f", Points[j]);
+                fprintf(approche_adomain, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
+                fputs(" ", approche_adomain);
+            }
+            fputs("\n", approche_adomain); // on change de ligne quand on change de alpha
+        }
+
+        fclose(approche_adomain); // on ferme le fichier une fois qu'il est rempli
+   }
 
     /***************************
     Calcul de la solution exacte
@@ -112,46 +151,88 @@ int main() {
     optimal
     ****************************/ 
 
-    double alpha_optim = 1.;
-    FILE *app_omega;
-    app_omega = fopen("solapp_omega.txt", "w");
-    FILE *ex_omega;
-    ex_omega = fopen("solex_omega.txt", "w");
-    FILE *erreur;
-    erreur = fopen("erreur_omega.txt", "w");
+    double alpha_optim = 1.; // on definit notre alpha optimal
+    // POUR LA METHODE DES NOYAUX ITERES
+    if (choix == 2) {
+        FILE *app_omega;
+        app_omega = fopen("solapp_omega_noyaux.txt", "w");
+        FILE *ex_omega;
+        ex_omega = fopen("solex_omega.txt", "w");
+        FILE *erreur;
+        erreur = fopen("erreur_omega.txt", "w");
 
-    // on calcule les solutions exactes et approchees pour tous les points de maillage du domaine
-    double y_i = 0.;
-    x_i = 0.;
-    for (j = 0; j < Ny; j++) {
-        Y[j] = y_i;
-        //printf("%f\n", Y[j]);
+        // on calcule les solutions exactes et approchees pour tous les points de maillage du domaine
+        double y_i = 0.;
         x_i = 0.;
-        for (i = 0; i < Nx; i++) {
-            Points[i] = x_i;
-            T_app[i] = T_tilde(x_i, y_i, alpha_optim); 
-            T_exact[i] = T_ex(x_i, y_i);
-            //T_exact[i] = cosh(M_PI*y_i)*cos(M_PI*x_i);
-            fprintf(app_omega, "%g", T_app[i]);
-            fputs(" ", app_omega);
-            fprintf(ex_omega, "%g", T_exact[i]);
-            fputs(" ", ex_omega);
-            fprintf(erreur, "%lf", fabs(T_exact[i]-T_app[i]));
-            fputs(" ", erreur);
-            //printf("%f\n", Points[i]);
-            x_i  = x_i+pasx;
+        for (j = 0; j < Ny; j++) {
+            Y[j] = y_i;
+            //printf("%f\n", Y[j]);
+            x_i = 0.;
+            for (i = 0; i < Nx; i++) {
+                Points[i] = x_i;
+                T_app[i] = T_tilde_noyaux(x_i, y_i, alpha_optim); 
+                T_exact[i] = T_ex(x_i, y_i);
+                //T_exact[i] = cosh(M_PI*y_i)*cos(M_PI*x_i);
+                fprintf(app_omega, "%g", T_app[i]);
+                fputs(" ", app_omega);
+                fprintf(ex_omega, "%g", T_exact[i]);
+                fputs(" ", ex_omega);
+                fprintf(erreur, "%lf", fabs(T_exact[i]-T_app[i]));
+                fputs(" ", erreur);
+                //printf("%f\n", Points[i]);
+                x_i  = x_i+pasx;
+            }
+            fputs("\n", app_omega); // on change de ligne quand on change de y_i
+            fputs("\n", ex_omega);
+            fputs("\n", erreur);
+            y_i  = y_i+pasy;
         }
-        fputs("\n", app_omega); // on change de ligne quand on change de y_i
-        fputs("\n", ex_omega);
-        fputs("\n", erreur);
-        y_i  = y_i+pasy;
-    }
+            // on ferme les fichiers
+            fclose(app_omega); 
+            fclose(ex_omega);
+            fclose(erreur);
+        }
 
+    // POUR LA METHODE D'ADOMAIN
+        else {
+        FILE *app_omega;
+        app_omega = fopen("solapp_omega_adomain.txt", "w");
+        FILE *ex_omega;
+        ex_omega = fopen("solex_omega.txt", "w");
+        FILE *erreur;
+        erreur = fopen("erreur_omega.txt", "w");
 
-    // on ferme les fichiers
-    fclose(app_omega); 
-    fclose(ex_omega);
-    fclose(erreur);
+        // on calcule les solutions exactes et approchees pour tous les points de maillage du domaine
+        double y_i = 0.;
+        x_i = 0.;
+        for (j = 0; j < Ny; j++) {
+            Y[j] = y_i;
+            //printf("%f\n", Y[j]);
+            x_i = 0.;
+            for (i = 0; i < Nx; i++) {
+                Points[i] = x_i;
+                T_app[i] = T_tilde_noyaux(x_i, y_i, alpha_optim); 
+                T_exact[i] = T_ex(x_i, y_i);
+                //T_exact[i] = cosh(M_PI*y_i)*cos(M_PI*x_i);
+                fprintf(app_omega, "%g", T_app[i]);
+                fputs(" ", app_omega);
+                fprintf(ex_omega, "%g", T_exact[i]);
+                fputs(" ", ex_omega);
+                fprintf(erreur, "%lf", fabs(T_exact[i]-T_app[i]));
+                fputs(" ", erreur);
+                //printf("%f\n", Points[i]);
+                x_i  = x_i+pasx;
+            }
+            fputs("\n", app_omega); // on change de ligne quand on change de y_i
+            fputs("\n", ex_omega);
+            fputs("\n", erreur);
+            y_i  = y_i+pasy;
+        }
+            // on ferme les fichiers
+            fclose(app_omega); 
+            fclose(ex_omega);
+            fclose(erreur);
+        }
 
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement
