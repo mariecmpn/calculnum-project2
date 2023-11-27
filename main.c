@@ -4,13 +4,8 @@
 #include "fonctions.h"
 #include "donnees.h" 
 #include "methodesnum.h"
-<<<<<<< HEAD
 #include "adomain.h"
-#include "num2.h"
-=======
 #include "noyaux.h"
-#include "adomain.h"
->>>>>>> main
 
 // PROGRAMME PRINCIPAL POUR LA PARTIE 1 DU PROJET: RESOLUTION DU PROBLEME DE CAUCHY
 
