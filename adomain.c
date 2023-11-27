@@ -74,12 +74,15 @@ double Adomain(double x, double alpha){
         }
 
 	for (i = 1; i <=nb_iter; i++) {
-            	for (j = 0; j<n; j++) {
-                	Un[j] = a*h(T[j]) - a*gauss_approx(T[j],n,0,L,U);
-                	res = res + Un[j];
-                	U[j] = Un[j];
+                u_n = - a*gauss_approx(x,n,0,L,U); // on calcule U_n au point x
+                res = res + u_n;
+            	for (j = 0; j<n; j++) { // puis on calcule u_n aux points de quadrature pour l'iteration d'apres
+                	Un[j] = - a*gauss_approx(T[j],n,0,L,U);
             	}
-    	}
+                for (j = 0; j<n; j++) { 
+                    U[j] = Un[j];
+                }
+        }
 
     // on libere l'espace memoire des tableaux alloues dynamiquement
     
