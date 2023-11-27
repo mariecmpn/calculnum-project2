@@ -101,7 +101,7 @@ int main() {
     for (j = 0; j < N; j++) {
         Points[j] = x_i;
         Gamma_exact[j] = Gamma_ex(x_i);
-        fprintf(exact, "%g", Gamma_exact[j]); // on l'enregistre dans le fichier frontiere_ex.txt
+        fprintf(exact, "%g", Gamma_ex(x_i)); // on l'enregistre dans le fichier frontiere_ex.txt
         fputs(" ", exact);
         x_i  = x_i+pas;
     }

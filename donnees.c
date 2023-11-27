@@ -16,7 +16,7 @@ double recup_H(float H) {
 
 int recup_M(float M) {
     /* fonction permettant de recuperer le nombre de termes pour les sommes infinies que l'on a tronque */
-    return 1;
+    return 5;
 }
 
 int recup_n(float n) {
@@ -26,5 +26,5 @@ int recup_n(float n) {
 
 int recup_nb_iter(int nb_iter) {
     /* fonction permettant de recuperer le nombre souhaite d'iterations pour les methodes d'approximation de f_3 */
-    return 16;
+    return 10;
 }

@@ -80,7 +80,7 @@ for i in range(22):
 
 Err_ado = np.zeros(22)
 for i in range(22):
-    Err_ado[i] = np.linalg.norm(T_alpha_ado[i] - Ex)
+    Err_ado[i] = np.linalg.norm(T_alpha_ado[i] - Ex)/ np.linalg.norm(Ex)
 
 #%% graphiques
 

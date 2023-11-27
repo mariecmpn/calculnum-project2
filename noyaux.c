@@ -124,9 +124,9 @@ double noyaux_iter(double x, double alpha) {
     double u_n; // resultat de l'equation de fredholm de seconde espece
 
     // on definit u_0
-    double *T = malloc(sizeof(int[n])); // allocation dynamique du tableau T qui contient les points de quadrature
-    double *U = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n-1 a chaque iteration n
-    double *Un = malloc(sizeof(int[n])); // allocation dynamique du tableau U qui contiendra les valeurs de u_n a chaque iteration n
+    double T[5]; // allocation du tableau T qui contient les points de quadrature
+    double U[5]; // allocation du tableau U qui contiendra les valeurs de u_n-1 a chaque iteration n
+    double Un[5]; // allocation du tableau U qui contiendra les valeurs de u_n a chaque iteration n
     switch (n) { // on remplit les tableaux des points de quadrature, et de u_0 en fonction de n
     // pour la premiere iteration on prend u_0(x) = 1/alpha * h(x)
         case 1:
@@ -186,9 +186,9 @@ double noyaux_iter(double x, double alpha) {
     }
 
     // on libere l'espace memoire des tableaux alloues dynamiquement
-    free(T);
-    free(U);
-    free(Un);
+    //free(T);
+    //free(U);
+    //free(Un);
 
     return u_n;
 }
