@@ -50,7 +50,6 @@ int main() {
     printf("%s", "Choix = ");
     scanf("%d", &choix);
 
-
     /***************************
      remplissage des tableaux
     ****************************/ 
@@ -67,9 +66,8 @@ int main() {
     Alpha[0] = 10.;
     Alpha[1] = 1.;
     for (i = 2; i<22; i++) {
-        Alpha[i] = 1./pow(10.,i+1);
+        Alpha[i] = 1./pow(10.,i-1);
     }
-
 
     // remplissage de Points
     double x_i = 0.;
@@ -79,7 +77,6 @@ int main() {
         //y_i  = y_i+pas;
         Points[i] = x_i;
         x_i  = x_i+pasx;
-        //printf("%f", Points[i]);
     }
 
     /***************************
@@ -87,8 +84,8 @@ int main() {
      sur Gamma_3 de la solution
      approchee
     ****************************/ 
-
-   y = H; // on se place sur Gamma_3
+   printf("%s","Je suis là");
+   
    // POUR LA METHODE DES NOYAUX ITERES
    if (choix == 2) {
         FILE *approche_noyaux;
