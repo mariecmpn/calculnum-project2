@@ -15,6 +15,7 @@ CONTENU DU DOSSIER:
 - noyaux.h: fichier header de noyaux.c;
 - adomain.c: code en C pour la resolution de l'equation de Fredholm par la methode de resolution d'Adomain;
 - adomain.h: fichier header d'adomain.c;
+- main_adomain.c: programme principal pour la comparaison entre les methodes directe et indirecte d'Adomain;
 - main2.c: code en C qui contient le programme principal de la partie 2 du projet (determination de la frontiere libre);
 - recup_partie1.py: code Python pour creer les graphiques de la partie 1 du projet;
 - recup_partie2.py: code Python pour creer les graphiques de la partie 2 du projet;
@@ -22,4 +23,5 @@ CONTENU DU DOSSIER:
 REGLES DE COMPILATION:
 - partie1: regle de compilation pour la premiere partie du projet (resolution du probleme de Cauchy);
 - partie2: regle de compilation pour la deuxieme partie du projet (determination de la frontiere libre);
+- comp_adomain: regle de compilation pour la comparaison entre la methode directe et la methode indirecte d'Adomain;
 - clean: efface les fichiers binaires et les fichiers executables.

@@ -85,7 +85,7 @@ double f_3(double x, double alpha){
  les coefficients
 **************************/
 
-double B0_f3_f0(double x, int m, double alpha){
+double B0_f3_f0_noyaux(double x, int m, double alpha){
     /* fonction a integer pour le coefficient B_0
     car en argument de gauss() il faut une fonction
     x: reel dont on veut calculer l'image */
@@ -94,7 +94,7 @@ double B0_f3_f0(double x, int m, double alpha){
     return r;
 }
 
-double Am_f3(double x, int m, double alpha){
+double Am_f3_noyaux(double x, int m, double alpha){
     /* fonction a integer pour le coefficient A_m
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
@@ -111,7 +111,7 @@ double Am_f3(double x, int m, double alpha){
     return r;
 }
 
-double Am_f0(double x, int m, double alpha){
+double Am_f0_noyaux(double x, int m, double alpha){
     /* fonction a integer pour le coefficient A_m
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule A_m */
@@ -128,7 +128,7 @@ double Am_f0(double x, int m, double alpha){
     return r;
 }
 
-double Bm_f0(double x, int m, double alpha) {
+double Bm_f0_noyaux(double x, int m, double alpha) {
     /* fonction a integer pour le coefficient B_m ()
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
@@ -145,7 +145,84 @@ double Bm_f0(double x, int m, double alpha) {
     return r;
 }
 
-double Bm_f3(double x, int m, double alpha) {
+double Bm_f3_noyaux(double x, int m, double alpha) {
+    /* fonction a integer pour le coefficient B_m
+    x: reel dont on veut calculer l'image
+    m: indice m pour lequel on calcule B_m */
+    
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = noyaux_iter(x,alpha)*cos((m*M_PI*x)/L);
+    return r;
+}
+
+double B0_f3_f0_adomain(double x, int m, double alpha){
+    /* fonction a integer pour le coefficient B_0
+    car en argument de gauss() il faut une fonction
+    x: reel dont on veut calculer l'image */
+    //double r = f_3(x,alpha)- f_0(x,m,alpha);
+    double r = noyaux_iter(x,alpha) + m*0.;
+    return r;
+}
+
+double Am_f3_adomain(double x, int m, double alpha){
+    /* fonction a integer pour le coefficient A_m
+    x: reel dont on veut calculer l'image
+    m: indice m pour lequel on calcule A_m */
+    
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = noyaux_iter(x,alpha)*cos((m*M_PI*x)/L);
+    return r;
+}
+
+double Am_f0_adomain(double x, int m, double alpha){
+    /* fonction a integer pour le coefficient A_m
+    x: reel dont on veut calculer l'image
+    m: indice m pour lequel on calcule A_m */
+    
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = (f_0(x,m,alpha) * exp((-m*M_PI*H)/L))*cos((m*M_PI*x)/L);
+    return r;
+}
+
+double Bm_f0_adomain(double x, int m, double alpha) {
+    /* fonction a integer pour le coefficient B_m ()
+    x: reel dont on veut calculer l'image
+    m: indice m pour lequel on calcule B_m */
+    
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = exp((m*M_PI*H)/L)*f_0(x,m,alpha)*cos((m*M_PI*x)/L);
+    return r;
+}
+
+double Bm_f3_adomain(double x, int m, double alpha) {
     /* fonction a integer pour le coefficient B_m
     x: reel dont on veut calculer l'image
     m: indice m pour lequel on calcule B_m */
@@ -166,7 +243,7 @@ double Bm_f3(double x, int m, double alpha) {
  fonctions coefficients
 *************************/
 
-double A_0() {
+double A_0_noyaux() {
     /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde */
     //on recupere d'abord les donnees du probleme
     double L,H;
@@ -180,7 +257,7 @@ double A_0() {
     return 0.;
 }
 
-double B_0(double alpha) {
+double B_0_noyaux(double alpha) {
     /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde */
     //on recupere d'abord les donnees du probleme
     double L,H;
@@ -190,11 +267,11 @@ double B_0(double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    double r = (1/(L*H))*gauss(n,B0_f3_f0,0,L,0,alpha);
+    double r = (1/(L*H))*gauss(n,B0_f3_f0_noyaux,0,L,0,alpha);
     return r;
 }
 
-double A_m(int m, double alpha) {
+double A_m_noyaux(int m, double alpha) {
     /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde */
     //on recupere d'abord les donnees du probleme
     float L,H;
@@ -204,11 +281,11 @@ double A_m(int m, double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Am_f3,0,L,m,alpha) - gauss(n,Am_f0,0,L,m,alpha));
+    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Am_f3_noyaux,0,L,m,alpha) - gauss(n,Am_f0_noyaux,0,L,m,alpha));
     return r;
 }
 
-double B_m(int m, double alpha) {
+double B_m_noyaux(int m, double alpha) {
     /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde */
     //on recupere d'abord les donnees du probleme
     double L,H;
@@ -218,7 +295,63 @@ double B_m(int m, double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Bm_f0,0,L,m,alpha) - gauss(n,Bm_f3,0,L,m,alpha));
+    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Bm_f0_noyaux,0,L,m,alpha) - gauss(n,Bm_f3_noyaux,0,L,m,alpha));
+    return r;
+}
+
+double A_0_adomain() {
+    /* fonction qui calcule le coefficient A_0 pour l'approximation de T_tilde */
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    //double r = (1/L)*gauss(n,f_0,0,L,0,0);
+    return 0.;
+}
+
+double B_0_adomain(double alpha) {
+    /* fonction qui calcule le coefficient B_0 pour l'approximation de T_tilde */
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = (1/(L*H))*gauss(n,B0_f3_f0_adomain,0,L,0,alpha);
+    return r;
+}
+
+double A_m_adomain(int m, double alpha) {
+    /* fonction qui calcule le coefficient A_m pour l'approximation de T_tilde */
+    //on recupere d'abord les donnees du probleme
+    float L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Am_f3_adomain,0,L,m,alpha) - gauss(n,Am_f0_adomain,0,L,m,alpha));
+    return r;
+}
+
+double B_m_adomain(int m, double alpha) {
+    /* fonction qui calcule le coefficient B_m pour l'approximation de T_tilde */
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    double r = (1/(L*sinh((m*M_PI*H)/L)))*(gauss(n,Bm_f0_adomain,0,L,m,alpha) - gauss(n,Bm_f3_adomain,0,L,m,alpha));
     return r;
 }
 
@@ -226,7 +359,7 @@ double B_m(int m, double alpha) {
  fonction T tilde approchee
 *************************/
 
-double T_tilde(double x, double y, double alpha) {
+double T_tilde_noyaux(double x, double y, double alpha) {
     /* fonction qui donne l'approximation de T_tilde */
     double T;
     int i;
@@ -238,10 +371,31 @@ double T_tilde(double x, double y, double alpha) {
     M = recup_M(M);
     n = recup_n(n);
     // puis on retourne la fonction souhaitee
-    T = A_0()+ B_0(alpha)*y;
+    T = A_0_noyaux()+ B_0_noyaux(alpha)*y;
     //printf("%f\n", T);
     for (i = 1; i<=M; i++) {
-        T = T + (A_m(i,alpha)*exp(i*M_PI*y/L) + B_m(i,alpha)*exp(-i*M_PI*y/L))*cos(i*M_PI*x/L);
+        T = T + (A_m_noyaux(i,alpha)*exp(i*M_PI*y/L) + B_m_noyaux(i,alpha)*exp(-i*M_PI*y/L))*cos(i*M_PI*x/L);
+        //printf("%f\n", T);
+    }
+    return T;
+}
+
+double T_tilde_adomain(double x, double y, double alpha) {
+    /* fonction qui donne l'approximation de T_tilde */
+    double T;
+    int i;
+    //on recupere d'abord les donnees du probleme
+    double L,H;
+    int M,n;
+    L = recup_L(L);
+    H = recup_H(H);
+    M = recup_M(M);
+    n = recup_n(n);
+    // puis on retourne la fonction souhaitee
+    T = A_0_noyaux()+ B_0_noyaux(alpha)*y;
+    //printf("%f\n", T);
+    for (i = 1; i<=M; i++) {
+        T = T + (A_m_noyaux(i,alpha)*exp(i*M_PI*y/L) + B_m_noyaux(i,alpha)*exp(-i*M_PI*y/L))*cos(i*M_PI*x/L);
         //printf("%f\n", T);
     }
     return T;
