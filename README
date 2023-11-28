@@ -16,12 +16,16 @@ CONTENU DU DOSSIER:
 - adomain.c: code en C pour la resolution de l'equation de Fredholm par la methode de resolution d'Adomain;
 - adomain.h: fichier header d'adomain.c;
 - main_adomain.c: programme principal pour la comparaison entre les methodes directe et indirecte d'Adomain;
+- fonctions2.c: code en C pour les fonctions utiles a la deuxieme partie du projet (frontiere exacte, derivee de T...);
+- fonctions2.h: fichier header de fonctions2.c;
 - main2.c: code en C qui contient le programme principal de la partie 2 du projet (determination de la frontiere libre);
 - recup_partie1.py: code Python pour creer les graphiques de la partie 1 du projet;
 - recup_partie2.py: code Python pour creer les graphiques de la partie 2 du projet;
+- rapport_COMPAIN_FOURNY.pdf: Rapport du projet au format PDF;
+- rapport_COMPAIN_FOURNY.tex: code source dau format tex du rapport.
 
 REGLES DE COMPILATION:
 - partie1: regle de compilation pour la premiere partie du projet (resolution du probleme de Cauchy);
 - partie2: regle de compilation pour la deuxieme partie du projet (determination de la frontiere libre);
-- comp_adomain: regle de compilation pour la comparaison entre la methode directe et la methode indirecte d'Adomain;
+- comp_adomain: regle de compilation pour la comparaison entre la methode directe et la recurrence d'Adomain;
 - clean: efface les fichiers binaires et les fichiers executables.
