@@ -15,7 +15,7 @@ int main() {
     int i, j; // entiers pour les boucles for
     int N = 51; // nombre de points de maillage en x
     double pas = 1./(N-1); // pas de maillage en x
-    double *Points = malloc(sizeof(int[N])); // tableau qui contient les valeurs des x_i
+    //double *Points = malloc(sizeof(int[N])); // tableau qui contient les valeurs des x_i
     double eps = 1.E-8; // tolerance epsilon pour la methode de Newton
 
     // recuperation des donnees du probleme definies dans donnees.c
@@ -59,10 +59,11 @@ int main() {
    if (choix == 2) { // avec f_3 trouve avec la methode des noyaux iteres
         FILE *approche_noyaux;
         approche_noyaux = fopen("frontiere_app_noyaux.txt", "w");
+        x_i = 0.;
         for (i=0; i<22;i++) {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
-                    Points[j] = x_i;
+                    //Points[j] = x_i;
                     Gamma_app = newton(x_i,fonction_T_noyaux,derivee_T_noyaux,eps,Alpha);
                     fprintf(approche_noyaux, "%g", Gamma_app); // on l'enregistre dans le fichier frontiere_app_noyaux.txt
                     fputs(" ", approche_noyaux);
@@ -79,7 +80,7 @@ int main() {
         for (i=0; i<22;i++) {
                 x_i = 0.;
                 for (j=0; j<N; j++) {
-                    Points[j] = x_i;
+                    //Points[j] = x_i;
                     Gamma_app = newton(x_i,fonction_T_adomain,derivee_T_adomain,eps,Alpha);
                     fprintf(approche, "%g", Gamma_app); // on l'enregistre dans le fichier frontiere_app_adomain.txt
                     fputs(" ", approche);
@@ -99,7 +100,7 @@ int main() {
     exact = fopen("frontiere_ex.txt", "w");
     x_i = 0.;
     for (j = 0; j < N; j++) {
-        Points[j] = x_i;
+        //Points[j] = x_i;
         Gamma_exact[j] = Gamma_ex(x_i);
         fprintf(exact, "%g", Gamma_ex(x_i)); // on l'enregistre dans le fichier frontiere_ex.txt
         fputs(" ", exact);
@@ -110,7 +111,7 @@ int main() {
     fclose(exact);
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement
-    free(Points);
+    //free(Points);
     //free(Gamma_app);
     free(Gamma_exact);
 

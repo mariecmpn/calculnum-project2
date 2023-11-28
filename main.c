@@ -21,8 +21,8 @@ int main() {
     int Napp = Nx, Nex = Nx;
     double pasx = 1./(Nx-1); // pas de maillage en x
     double pasy = 1./(Ny-1); // pas de maillage en y
-    double *Points = malloc(sizeof(int[Nx])); // tableau qui contient les valeurs des x_i
-    double *Y = malloc(sizeof(int[Ny])); // tableau qui contient les y_i
+    //double *Points = malloc(sizeof(int[Nx])); // tableau qui contient les valeurs des x_i
+    //double *Y = malloc(sizeof(int[Ny])); // tableau qui contient les y_i
 
     //double Alpha[22]; // tableau qui contient les differentes valeurs de alpha
 
@@ -74,13 +74,13 @@ int main() {
     // remplissage de Points
     double x_i = 0.;
     //double y_i = 0.;
-    for (i = 0; i<Nx; i++) {
+    /*for (i = 0; i<Nx; i++) {
         //Y[i] = y_i;
         //y_i  = y_i+pas;
         Points[i] = x_i;
         x_i  = x_i+pasx;
         //printf("%f", Points[i]);
-    }
+    }*/
 
     /***************************
      Calcul pour plusieurs alpha
@@ -94,11 +94,13 @@ int main() {
         FILE *approche_noyaux;
         approche_noyaux = fopen("approche_noyaux.txt", "w"); // on ouvre le fichier en ecriture
         for (i = 0; i < 22; i++) {
+            x_i = 0.;
             for (j = 0; j < Nx; j++) {
-                T_app[j] = noyaux_iter(Points[j], Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                T_app[j] = noyaux_iter(x_i, Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
                 //printf("%f", Points[j]);
                 fprintf(approche_noyaux, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
                 fputs(" ", approche_noyaux);
+                x_i = x_i + pasx; // on calcule le prochain x
             }
             fputs("\n", approche_noyaux); // on change de ligne quand on change de alpha
             Alpha = Alpha*0.1;
@@ -111,11 +113,13 @@ int main() {
         FILE *approche_adomain;
         approche_adomain = fopen("approche_adomain.txt", "w"); // on ouvre le fichier en ecriture
         for (i = 0; i < 22; i++) {
+            x_i = 0.;
             for (j = 0; j < Nx; j++) {
-                T_app[j] = Adomain(Points[j], Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
+                T_app[j] = Adomain(x_i, Alpha); // on calcule T_tilde pour alpha et x_i: sur Gamma_3 T_tilde = f_3 Alpha[i]
                 //printf("%f", Points[j]);
                 fprintf(approche_adomain, "%g", T_app[j]); // on l'enregistre dans le fichier approche_1.txt
                 fputs(" ", approche_adomain);
+                x_i = x_i + pasx; // on calcule le prochain x
             }
             fputs("\n", approche_adomain); // on change de ligne quand on change de alpha
             Alpha = Alpha*0.1;
@@ -131,8 +135,9 @@ int main() {
 
     FILE *exact;
     exact = fopen("exact_1.txt", "w"); // on ouvre le fichier
+    x_i = 0.;
     for (i = 0; i<Nx; i++) {
-        T_exact[i] = f_3_ex(Points[i]); // calcul de T sur Gamma_3 
+        T_exact[i] = f_3_ex(x_i); // calcul de T sur Gamma_3 
         //T_exact[i] = cosh(M_PI*H)*cos(M_PI*Points[i]);
         //printf("%f%s", Points[i], " ");
         //printf("%f\n", T_exact[i]);
@@ -162,11 +167,11 @@ int main() {
         double y_i = 0.;
         x_i = 0.;
         for (j = 0; j < Ny; j++) {
-            Y[j] = y_i;
+            //Y[j] = y_i;
             //printf("%f\n", Y[j]);
             x_i = 0.;
             for (i = 0; i < Nx; i++) {
-                Points[i] = x_i;
+                //Points[i] = x_i;
                 T_app[i] = T_tilde_noyaux(x_i, y_i, alpha_optim); 
                 T_exact[i] = T_ex(x_i, y_i);
                 //T_exact[i] = cosh(M_PI*y_i)*cos(M_PI*x_i);
@@ -203,11 +208,11 @@ int main() {
         double y_i = 0.;
         x_i = 0.;
         for (j = 0; j < Ny; j++) {
-            Y[j] = y_i;
+            //Y[j] = y_i;
             //printf("%f\n", Y[j]);
             x_i = 0.;
             for (i = 0; i < Nx; i++) {
-                Points[i] = x_i;
+                //Points[i] = x_i;
                 T_app[i] = T_tilde_noyaux(x_i, y_i, alpha_optim); 
                 T_exact[i] = T_ex(x_i, y_i);
                 //T_exact[i] = cosh(M_PI*y_i)*cos(M_PI*x_i);
@@ -233,8 +238,8 @@ int main() {
 
 
     // on desalloue l'espace memoire des tableaux alloues dynamiquement
-    free(Points);
-    free(Y);
+    //free(Points);
+    //free(Y);
     free(T_exact);
     free(T_app);
 
